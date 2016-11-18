@@ -1,3 +1,23 @@
+# below for Java
+*.class
+*.log
+.DS_Store
+._.DS_Store
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+temp/
+upload/
+logs/
+
+# Package Files #
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# below for Andord
 # Built application files
 *.apk
 *.ap_
