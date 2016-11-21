@@ -107,7 +107,7 @@ public class GoodsProcess extends NetProcess {
 				mapper.remove("id");
 			}
 				
-			int ret = table.insert(mapper);
+			int ret = table.insert(mapper);		// 插入
 			NetLog.debug("123", ret+"");
 			String _data=map.get("data");
 			
