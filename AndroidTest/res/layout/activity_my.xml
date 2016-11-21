@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <LinearLayout 
+        android:id="@+id/LinearLayout01" 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+        <TextView android:id="@+id/TextView01" 
+            android:layout_width="match_parent" 
+            android:layout_height="wrap_content" 
+            android:text="@string/spending_bills"  
+            android:minWidth="80dip" 
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+        <LinearLayout android:id="@+id/LinearLayout02" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content">  
+        	<TextView android:id="@+id/TextView02" 
+            	android:layout_width="wrap_content" 
+            	android:layout_height="wrap_content" 
+           	 	android:text="@string/date"  
+            	android:minWidth="80dip" 
+            	android:textAppearance="?android:attr/textAppearanceLarge"
+            	/>       
+        	<RelativeLayout 
+        	    android:layout_width="wrap_content" 
+        		android:layout_height="wrap_content"
+        		android:orientation="vertical">  
+        		<EditText android:id="@+id/edittext_acctitem01" 
+            		android:layout_width="wrap_content" 
+            		android:layout_height="wrap_content" 
+            		android:width="200dip" 
+            		android:maxLines="1" 
+            		android:editable="true" 
+            		android:digits="1234567890-" 
+            		android:cursorVisible="true"/>
+        		<TextView android:id="@+id/TextView03" 
+            		android:layout_width="wrap_content" 
+            		android:layout_height="wrap_content" 
+           	 		android:text="@string/date02"  
+            		android:minWidth="40dip" 
+            		android:layout_alignLeft ="@id/edittext_acctitem01"
+            		android:layout_below="@id/edittext_acctitem01"
+            		android:textAppearance="?android:attr/textAppearanceLarge"
+            		/>
+        	</RelativeLayout>
+    	</LinearLayout>  
+    	<LinearLayout android:id="@+id/LinearLayout03" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content">  
+        	<TextView android:id="@+id/TextView04" 
+            	android:layout_width="wrap_content" 
+            	android:layout_height="wrap_content" 
+           	 	android:text="@string/for_what"  
+            	android:minWidth="80dip" 
+            	android:textAppearance="?android:attr/textAppearanceLarge"
+            	/>       
+        	<EditText android:id="@+id/edittext_acctitem02" 
+            	android:layout_width="wrap_content" 
+            	android:layout_height="wrap_content" 
+            	android:width="200dip" 
+            	android:maxLines="1" 
+            	android:editable="true" 
+            	android:cursorVisible="true"
+            	/>                    
+    	</LinearLayout>  
+    	<LinearLayout android:id="@+id/LinearLayout04" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content">  
+        	<TextView android:id="@+id/TextView05" 
+            	android:layout_width="wrap_content" 
+            	android:layout_height="wrap_content" 
+           	 	android:text="@string/amount_paid"  
+            	android:minWidth="80dip" 
+            	android:textAppearance="?android:attr/textAppearanceLarge"
+            	/>       
+        	<EditText android:id="@+id/edittext_acctitem03" 
+            	android:layout_width="wrap_content" 
+            	android:layout_height="wrap_content" 
+            	android:width="200dip" 
+            	android:maxLines="1" 
+            	android:digits="1234567890." 
+            	android:editable="true" 
+            	android:cursorVisible="true"
+            	/>                    
+    	</LinearLayout> 
+    	<TextView 
+            android:layout_width="match_parent" 
+            android:layout_height="match_parent" 
+            android:text="@string/remark"  
+            android:minWidth="80dip" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/> 
+        
+        <EditText android:id="@+id/edittext_acctitem04" 
+        	android:layout_width="fill_parent" 
+        	android:layout_height="wrap_content"  
+        	android:lines="6" 
+        	android:gravity="top"
+        />
+        <LinearLayout android:id="@+id/LinearLayout05" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content">  
+        	<Button 
+        		android:id="@+id/BtnSave" 
+       			android:width="160dip" 
+        		android:text="@string/save" 
+        		android:textStyle="bold" 
+        		android:textSize="24dip" 
+        		android:layout_width="wrap_content" 
+        		android:layout_height="wrap_content"
+        	/>  
+    		<Button 
+        	android:id="@+id/BtnCancel" 
+        	android:width="160dip"
+        	android:text="@string/cancel" 
+        	android:textStyle="bold" 
+        	android:textSize="24dip" 
+        	android:layout_width="wrap_content" 
+        	android:layout_height="wrap_content"
+        	/>  
+    </LinearLayout>
+    </LinearLayout>
+    
+
+</ScrollView>

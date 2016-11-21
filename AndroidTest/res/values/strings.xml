@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AndroidTest</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="err_is_busy">err_is_busy</string>
+    <string name="err_http_failure">err_http_failure</string>
+    <string name="err_http_error">err_http_error</string>
+    <string name="err_http_invalid">err_http_invalid</string>
+    <string name="err_http_error_respond">err_http_error_respond</string>
+    <string name="err_http_timeout">err_http_timeout</string>
+    <string name="add_bill">添加账单</string>
+    <string name="fill_in_the_cost">添加账单</string>
+    <string name="personal_finance">个人理财</string>
+    <string name="spending_bills">支出账单</string>
+    <string name="date">日期</string>
+    <string name="date02">格式：xxxx-xx-xx</string>
+    <string name="for_what">支出事项</string>
+    <string name="amount_paid">支出金额</string>
+    <string name="remark">备注</string>
+    <string name="save">保存</string>
+    <string name="cancel">取消</string>
+    <string name="add">添加</string>
+    <string name="title_activity_main_myactivity">添加账单</string>
+	<string name="date_null">日期不能为空</string>
+	<string name="ok">确定</string>
+	<string name="choose">选择</string>
+	<string name="find">查询</string>
+	<string name="delete">删除</string>
+	<string name="find_results">查询结果</string>
+	<string name="event">事项</string>
+	<string name="money">金额</string>
+	<string name="title_activity_main_queryactivity">账单查询</string>
+	<string name="id">id</string>
+</resources>
