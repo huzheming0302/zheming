@@ -10,8 +10,14 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.poi.ss.formula.functions.T;
+
+
+
+
+
 
 
 
@@ -49,6 +55,8 @@ import freemarker.log.Logger;
 public class GoodsProcess extends NetProcess {
 	private static final String TAG="GoodsProcess";
 
+	//private static final String "date" = null;
+
 	private WebUtil mWebUtil = null;
 	
 	public GoodsProcess()
@@ -84,16 +92,6 @@ public class GoodsProcess extends NetProcess {
 			NotificationItem item = new NotificationItem();
 			Gson gson = new Gson();
 			item = gson.fromJson(data, NotificationItem.class);
-			/*String date=map.get("date");
-			String event=map.get("event");
-			String money=map.get("money");
-			String remark=map.get("remark");
-			
-			item.setDate(date);
-			item.setEvent(event);
-			item.setMoney(money);
-			item.setRemark(remark);*/
-			//Data data=new JsonToObj(str).JSON2Object();
 			Map<String, Object> mapper = null;
 			try {
 				mapper = TransferUtils.transferBean2Map(item);
@@ -109,26 +107,46 @@ public class GoodsProcess extends NetProcess {
 				
 			int ret = table.insert(mapper);		// 插入
 			NetLog.debug("123", ret+"");
-			String _data=map.get("data");
+			//String _data=map.get("data");
 			
-			String str1 = String.format("{\"flag\":{\"errorType\":\"ok\"},\"data\":\"%s\"}", _data);
-			this.print(str1);
+			//String str1 = String.format("{\"flag\":{\"errorType\":\"ok\"},\"data\":\"%s\"}", _data);
+			this.print(data);
 		}
 		
 		
 		if (path.equals("\\v1\\query"))
 		{	
+			DatabaseParam param = GoodsConfig.instance().getDatabaseParam();
+			NotificationTable table = new NotificationTable(param);
+			JSONObject  jasonObject = JSONObject.fromObject(data);
+			Map map2 = (Map<String, String>)jasonObject;
+			//NotificationItem item = new NotificationItem();
+			//Gson gson = new Gson();
+			//item = gson.fromJson(data, NotificationItem.class);
+			//String date = item.getDate();
 			
+			//JSONObject jasonObject = JSONObject.fromObject(date);
+			//Map map0 = (Map)jasonObject;
+			//Map("date",String) map0 
 			
-			String _data=map.get("data");
-			String sql = "select *from mySql where date = " ;
+			//Map<String, String> map2;
+			//map2.put("date", date);
+			List<NotificationItem> notifList = new ArrayList<NotificationItem>();
+			notifList=table.queryList(0,-1,map2);
+			JSONArray jsonArray = JSONArray.fromObject(notifList); 
+			//String json = jsonArray.toString();
+			ServerFlag flag = new ServerFlag();
+			String json = new MakeJsonReturn().MakeJsonReturn(flag,jsonArray);
+			/*if(json.indexOf("[") != -1){
+				json = json.replace("[", "");  
+			}
+			if(json.indexOf("]") != -1){ 
+				json = json.replace("]", ""); 
+			}*/
 			
-			
-			
-			//list=new QueryReturn().getForList(clazz, sql, args);
-			String _data1=map.get("data");
-			String str = String.format("{\"flag\":{\"errorType\":\"ok\"},\"data\":\"%s\"}", _data1);
-			this.print(str);
+			//String str = String.format("{\"flag\":{\"errorType\":\"ok\"},\"data\":\"%s\"}", _data1);
+			//String str = String.format("{\"flag\":{\"errorType\":\"ok\"},\"data\":\"%s\"}",json);
+			this.print(json);
 		}
 
 		NetLog.debug(address, "Leave onProcess - GoodsProcess()");

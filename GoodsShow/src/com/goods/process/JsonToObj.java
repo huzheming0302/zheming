@@ -15,12 +15,12 @@ public class JsonToObj {
 	}
 	
 	public NotificationItem JSON2Object(){ 
-		/*if(jsonStr.indexOf("[") != -1){
+		if(jsonStr.indexOf("[") != -1){
 			jsonStr = jsonStr.replace("[", "");  
 		}
 		if(jsonStr.indexOf("]") != -1){ 
 			jsonStr = jsonStr.replace("]", ""); 
-		}*/
+		}
 	
 		JSONObject obj = new JSONObject().fromObject(jsonStr);
 		NotificationItem data = (NotificationItem)JSONObject.toBean(obj,NotificationItem.class);
