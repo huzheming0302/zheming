@@ -120,31 +120,19 @@ public class GoodsProcess extends NetProcess {
 			NotificationTable table = new NotificationTable(param);
 			JSONObject  jasonObject = JSONObject.fromObject(data);
 			Map map2 = (Map<String, String>)jasonObject;
-			//NotificationItem item = new NotificationItem();
-			//Gson gson = new Gson();
-			//item = gson.fromJson(data, NotificationItem.class);
-			//String date = item.getDate();
-			
-			//JSONObject jasonObject = JSONObject.fromObject(date);
-			//Map map0 = (Map)jasonObject;
-			//Map("date",String) map0 
-			
-			//Map<String, String> map2;
-			//map2.put("date", date);
 			List<NotificationItem> notifList = new ArrayList<NotificationItem>();
 			notifList=table.queryList(0,-1,map2);
 			JSONArray jsonArray = JSONArray.fromObject(notifList); 
 			//String json = jsonArray.toString();
 			ServerFlag flag = new ServerFlag();
 			String json = new MakeJsonReturn().MakeJsonReturn(flag,jsonArray);
-			/*if(json.indexOf("[") != -1){
-				json = json.replace("[", "");  
-			}
-			if(json.indexOf("]") != -1){ 
-				json = json.replace("]", ""); 
-			}*/
-			
-			//String str = String.format("{\"flag\":{\"errorType\":\"ok\"},\"data\":\"%s\"}", _data1);
+			JSONObject obj = new JSONObject().fromObject(json);
+			JSONArray jsonData = null;
+			//JSONObject jsonResponse = null;
+			//jsonResponse = new JSONObject(json);
+			jsonData = obj.getJSONArray("data");
+			NetLog.debug("123",jsonData.toString());
+			NetLog.debug("12345",json);
 			//String str = String.format("{\"flag\":{\"errorType\":\"ok\"},\"data\":\"%s\"}",json);
 			this.print(json);
 		}
