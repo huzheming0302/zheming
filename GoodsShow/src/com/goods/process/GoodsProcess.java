@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.poi.ss.formula.functions.T;
+
 
 
 
@@ -81,8 +83,6 @@ public class GoodsProcess extends NetProcess {
 		mWebUtil.setTemplatePath(tempFile.getParent());
 		Map<String, String> map =request;
 		String data=map.get("data");
-		
-		
 		//String str=new Map2Json().simpleMapToJsonStr(map);
 		//System.out.println("str="+str);
 		if (path.equals("\\v1\\add"))
@@ -120,17 +120,30 @@ public class GoodsProcess extends NetProcess {
 			NotificationTable table = new NotificationTable(param);
 			JSONObject  jasonObject = JSONObject.fromObject(data);
 			Map map2 = (Map<String, String>)jasonObject;
-			List<NotificationItem> notifList = new ArrayList<NotificationItem>();
+			List<NotificationItem> notifList = null;
 			notifList=table.queryList(0,-1,map2);
-			JSONArray jsonArray = JSONArray.fromObject(notifList); 
+			String json = "";
+			if (notifList != null && notifList.size()>0)
+			{
+				Map<String, Object> data1 = new HashMap<String, Object>();
+				((Map) data1).put("data1",notifList);
+				ServerFlag flag = new ServerFlag();
+				json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+				
+			}
+			else
+			{
+			 // log error
+			}
+			//JSONArray jsonArray = JSONArray.fromObject(notifList); 
 			//String json = jsonArray.toString();
-			ServerFlag flag = new ServerFlag();
-			String json = new MakeJsonReturn().MakeJsonReturn(flag,jsonArray);
+			//ServerFlag flag = new ServerFlag();
+			//String json = new MakeJsonReturn().MakeJsonReturn(flag,jsonArray);
 			JSONObject obj = new JSONObject().fromObject(json);
-			JSONArray jsonData = null;
+			JSONObject jsonData = null;
 			//JSONObject jsonResponse = null;
 			//jsonResponse = new JSONObject(json);
-			jsonData = obj.getJSONArray("data");
+			jsonData = obj.getJSONObject("data");
 			NetLog.debug("123",jsonData.toString());
 			NetLog.debug("12345",json);
 			//String str = String.format("{\"flag\":{\"errorType\":\"ok\"},\"data\":\"%s\"}",json);

@@ -66,20 +66,14 @@
             android:text="@string/remark" />
     </LinearLayout>
    
-	<ScrollView
-	    android:layout_width="match_parent"
-	    android:layout_height="314dp"
-	    android:layout_weight="0.57"
-	    android:orientation="vertical" >
-
-> 
+	
 	    
     <ListView
         android:id="@+id/listview_01"
         android:layout_width="match_parent"
-        android:layout_height="131dp" >
+        android:layout_height="156dp" >
 	</ListView>
-    </ScrollView>  
+
 
     
 

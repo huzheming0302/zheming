@@ -8,30 +8,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.01"
-            android:text="@string/id" />
+           	/>
      <TextView
             android:id="@+id/textview_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.01"
-            android:text="@string/date" />
+            />
      <TextView
             android:id="@+id/textview_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.01"
-            android:text="@string/event" />
+            />
      <TextView
             android:id="@+id/textview_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.01"
-            android:text="@string/money" />
+            />
      <TextView
             android:id="@+id/textview_remark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.01"
-            android:text="@string/remark" />
+            />
 	
 </LinearLayout>
