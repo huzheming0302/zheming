@@ -109,8 +109,9 @@ public class GoodsProcess extends NetProcess {
 			NetLog.debug("123", ret+"");
 			//String _data=map.get("data");
 			
-			//String str1 = String.format("{\"flag\":{\"errorType\":\"ok\"},\"data\":\"%s\"}", _data);
-			this.print(data);
+			String str1 = String.format("{\"flag\":{\"errorType\":\"ok\"},\"data\":null}");
+										
+			this.print(str1);
 		}
 		
 		

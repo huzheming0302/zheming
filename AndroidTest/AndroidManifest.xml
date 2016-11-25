@@ -53,7 +53,16 @@
         <activity 
             android:name=".DateNullActivity" 
             android:label="@string/title_activity_main_myactivity"
-            android:theme="@android:style/Theme.Dialog">
+            android:theme="@android:style/Theme.Dialog"></activity>
+       	<activity
+       	    android:name=".WelcomeActivity"
+       	    android:label="@string/title_activity_main_welcome_activity" >
+                <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            	</intent-filter>
+       	</activity>
             <intent-filter >
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.SAMPLE_CODE"/>
@@ -63,7 +72,7 @@
             
             </intent-filter>
             
-        </activity>
+       
     </application>
 
 </manifest>
