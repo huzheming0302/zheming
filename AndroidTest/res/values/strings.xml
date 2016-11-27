@@ -34,5 +34,7 @@
 	<string name="title_activity_main_queryactivity">账单查询</string>
 	<string name="id">id</string>
 	<string name="title_activity_main_welcome_activity">Welcome</string>
+	<string name="welcome">欢迎</string>
+	<string name="error">加载出错</string>
 	
 </resources>
