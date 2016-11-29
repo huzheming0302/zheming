@@ -66,7 +66,13 @@
             android:text="@string/remark" />
     </LinearLayout>
    
-	
+	<ProgressBar 
+        android:id="@+id/progress_bar"  
+        android:layout_width="fill_parent"  
+        android:layout_height="wrap_content" 
+        android:progress="0" 
+        android:max="100"  
+        style="?android:attr/progressBarStyleHorizontal"/> 
 	    
     <ListView
         android:id="@+id/listview_01"
@@ -91,6 +97,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="cancle" />
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="return" />
             
   	</LinearLayout>
     

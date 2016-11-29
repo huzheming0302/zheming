@@ -11,9 +11,10 @@
        		android:background="#FFF5EE"
         	android:text="@string/welcome" />
 	<ImageView 
-	    
+	    	android:id="@+id/ImageView01"
 	    	android:layout_width="wrap_content"
        		android:layout_height="wrap_content"
-       		android:src="@drawable/welcome1"/>
+       		android:src="@drawable/welcome1"
+       		/>
 	
 </LinearLayout>

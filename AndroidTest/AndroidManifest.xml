@@ -58,7 +58,7 @@
             android:name=".MyActivity" 
             android:label="@string/title_activity_main_myactivity"></activity>
         <activity 
-            android:name=".QueryActivity" 
+            android:name=".QueryActivity1" 
             android:label="@string/title_activity_main_queryactivity"></activity>
         <activity 
             android:name=".DateNullActivity" 
