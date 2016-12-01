@@ -50,6 +50,11 @@
             
         </activity>
         <activity
+            android:name=".GuideActivity"
+            android:label="@string/app_name" >
+            
+        </activity>
+        <activity
             android:name=".ErrorActivity"
             android:label="@string/app_name" >
             
@@ -59,7 +64,8 @@
             android:label="@string/title_activity_main_myactivity"></activity>
         <activity 
             android:name=".QueryActivity" 
-            android:label="@string/title_activity_main_queryactivity"></activity>
+            android:label="@string/title_activity_main_queryactivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" ></activity>
         <activity 
             android:name=".DateNullActivity" 
             android:label="@string/title_activity_main_myactivity"

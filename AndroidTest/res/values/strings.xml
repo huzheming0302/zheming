@@ -36,5 +36,6 @@
 	<string name="title_activity_main_welcome_activity">Welcome</string>
 	<string name="welcome">欢迎</string>
 	<string name="error">加载出错</string>
+	<string name="start">开始使用</string>
 	
 </resources>
