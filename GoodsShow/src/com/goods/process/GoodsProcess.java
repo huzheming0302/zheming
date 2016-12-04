@@ -31,7 +31,13 @@ import org.apache.poi.ss.formula.functions.T;
 
 
 
+
+
+
 import com.goods.application.GoodsConfig;
+import com.goods.application.LoginItem;
+import com.goods.application.LoginResult;
+import com.goods.application.LoginTable;
 import com.goods.application.NotificationItem;
 import com.goods.application.NotificationTable;
 import com.goods.application.Pages;
@@ -85,6 +91,95 @@ public class GoodsProcess extends NetProcess {
 		String data=map.get("data");
 		//String str=new Map2Json().simpleMapToJsonStr(map);
 		//System.out.println("str="+str);
+		
+		if (path.equals("\\v1\\verify"))
+		{
+			DatabaseParam param = GoodsConfig.instance().getDatabaseParam();
+			LoginTable table = new LoginTable(param);
+			LoginItem item = new LoginItem();
+			Gson gson = new Gson();
+			item = gson.fromJson(data, LoginItem.class);
+			Map<String, Object> mapper = null;
+			String phonenumber = "";
+			String password = "";
+			try {
+				mapper = TransferUtils.transferBean2Map(item);
+			} catch (TransferException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (mapper != null && mapper.containsKey("phonenumber")){
+				phonenumber = mapper.get("phonenumber").toString();
+				password = mapper.get("password").toString();
+			}
+			List<LoginItem> loginList = null;
+			loginList=table.queryList(0,-1,phonenumber);
+			LoginResult loginresult = new LoginResult();
+			String exist = "correct";
+			String inexistence = "error";
+			String noresult = "noresult";
+			String json = "";
+			if (!loginList.isEmpty() && loginList.size() == 1){
+				
+				LoginItem item2 = new LoginItem();
+				item2 = loginList.get(0);
+				String result = item2.getPassword();
+				Map<String, Object> data1 = new HashMap<String, Object>();
+				if (result.equals(password)){
+					loginresult.setResult(exist);
+				}
+				else {
+					loginresult.setResult(inexistence);
+				}
+				((Map) data1).put("data1",loginresult);
+				ServerFlag flag = new ServerFlag();
+				json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+				this.print(json);
+				
+			}
+			if (loginList.isEmpty()) {
+				Map<String, Object> data1 = new HashMap<String, Object>();
+				loginresult.setResult(noresult);
+				((Map) data1).put("data1",loginresult);
+				ServerFlag flag = new ServerFlag();
+				json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+				this.print(json);
+				
+			}
+		}
+		
+		if (path.equals("\\v1\\register"))
+		{
+			DatabaseParam param = GoodsConfig.instance().getDatabaseParam();
+			LoginTable table = new LoginTable(param);
+			LoginItem item = new LoginItem();
+			Gson gson = new Gson();
+			item = gson.fromJson(data, LoginItem.class);
+			Map<String, Object> mapper = null;
+			try {
+				mapper = TransferUtils.transferBean2Map(item);
+			} catch (TransferException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (mapper != null && mapper.containsKey("id")){
+				mapper.remove("id");
+			}
+			int ret = table.insert(mapper);		// 插入
+			NetLog.debug("123", ret+"");
+			//String _data=map.get("data");
+			LoginResult loginresult = new LoginResult();
+			String succeed = "succeed";
+			loginresult.setResult(succeed);
+			Map<String, Object> data1 = new HashMap<String, Object>();
+			String json = "";
+			((Map) data1).put("data1",loginresult);
+			ServerFlag flag = new ServerFlag();
+			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+			this.print(json);
+			
+		}
+		
 		if (path.equals("\\v1\\add"))
 		{	
 			DatabaseParam param = GoodsConfig.instance().getDatabaseParam();
@@ -150,7 +245,8 @@ public class GoodsProcess extends NetProcess {
 			//String str = String.format("{\"flag\":{\"errorType\":\"ok\"},\"data\":\"%s\"}",json);
 			this.print(json);
 		}
-
+		
+			
 		NetLog.debug(address, "Leave onProcess - GoodsProcess()");
 		NetLog.debug(address, "=============================");
 	}

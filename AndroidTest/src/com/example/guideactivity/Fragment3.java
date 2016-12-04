@@ -1,5 +1,6 @@
 package com.example.guideactivity;
 
+import com.example.androidtest.LoginActivity;
 import com.example.androidtest.MainActivity;
 import com.example.androidtest.QueryActivity;
 import com.example.androidtest.R;
@@ -26,7 +27,7 @@ public class Fragment3 extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(getActivity(),MainActivity.class);
+				Intent intent = new Intent(getActivity(),LoginActivity.class);
                 startActivity(intent);
 			}
 		});
