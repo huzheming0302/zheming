@@ -1,69 +1,28 @@
 package com.goods.process;
 
 import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-
-import org.apache.poi.ss.formula.functions.T;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import com.goods.application.GoodsConfig;
 import com.goods.application.LoginItem;
 import com.goods.application.LoginResult;
 import com.goods.application.LoginTable;
 import com.goods.application.NotificationItem;
 import com.goods.application.NotificationTable;
-import com.goods.application.Pages;
 import com.google.gson.Gson;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
-
-
-
-
-
-import com.mysql.jdbc.log.Log;
-
 import exhi.net.database.DatabaseParam;
-import exhi.net.database.NetTable;
 import exhi.net.log.NetLog;
 import exhi.net.netty.NetProcess;
 import exhi.net.netty.WebUtil;
 import exhi.net.utils.TransferException;
 import exhi.net.utils.TransferUtils;
-import freemarker.log.Logger;
+
 
 public class GoodsProcess extends NetProcess {
+	
 	private static final String TAG="GoodsProcess";
-
-	//private static final String "date" = null;
 
 	private WebUtil mWebUtil = null;
 	
@@ -101,42 +60,34 @@ public class GoodsProcess extends NetProcess {
 			item = gson.fromJson(data, LoginItem.class);
 			Map<String, Object> mapper = null;
 			String phonenumber = "";
-			String password = "";
+			
 			try {
 				mapper = TransferUtils.transferBean2Map(item);
 			} catch (TransferException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			if (mapper != null && mapper.containsKey("phonenumber")){
 				phonenumber = mapper.get("phonenumber").toString();
-				password = mapper.get("password").toString();
 			}
+			
 			List<LoginItem> loginList = null;
 			loginList=table.queryList(0,-1,phonenumber);
 			LoginResult loginresult = new LoginResult();
-			String exist = "correct";
-			String inexistence = "error";
 			String noresult = "noresult";
 			String json = "";
+			
 			if (!loginList.isEmpty() && loginList.size() == 1){
-				
 				LoginItem item2 = new LoginItem();
 				item2 = loginList.get(0);
 				String result = item2.getPassword();
 				Map<String, Object> data1 = new HashMap<String, Object>();
-				if (result.equals(password)){
-					loginresult.setResult(exist);
-				}
-				else {
-					loginresult.setResult(inexistence);
-				}
-				((Map) data1).put("data1",loginresult);
+				((Map) data1).put("data1",item2);
 				ServerFlag flag = new ServerFlag();
 				json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
 				this.print(json);
-				
 			}
+			
 			if (loginList.isEmpty()) {
 				Map<String, Object> data1 = new HashMap<String, Object>();
 				loginresult.setResult(noresult);
@@ -156,23 +107,35 @@ public class GoodsProcess extends NetProcess {
 			Gson gson = new Gson();
 			item = gson.fromJson(data, LoginItem.class);
 			Map<String, Object> mapper = null;
+			String phonenumber = "";
+			
 			try {
 				mapper = TransferUtils.transferBean2Map(item);
 			} catch (TransferException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (mapper != null && mapper.containsKey("id")){
-				mapper.remove("id");
+			
+			if (mapper != null && mapper.containsKey("phonenumber")){
+				phonenumber = mapper.get("phonenumber").toString();
 			}
-			int ret = table.insert(mapper);		// 插入
-			NetLog.debug("123", ret+"");
-			//String _data=map.get("data");
+			
+			List<LoginItem> loginList = null;
+			loginList=table.queryList(0,-1,phonenumber);
 			LoginResult loginresult = new LoginResult();
-			String succeed = "succeed";
-			loginresult.setResult(succeed);
-			Map<String, Object> data1 = new HashMap<String, Object>();
 			String json = "";
+			
+			if (!loginList.isEmpty() && loginList.size() == 1){
+				String result = "ALREADY EXISTS";
+				loginresult.setResult(result);
+			}else {
+				int ret = table.insert(mapper);		// 插入
+				NetLog.debug("123", ret+"");
+				String succeed = "succeed";
+				loginresult.setResult(succeed);
+			}
+			
+			Map<String, Object> data1 = new HashMap<String, Object>();
 			((Map) data1).put("data1",loginresult);
 			ServerFlag flag = new ServerFlag();
 			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
@@ -188,25 +151,30 @@ public class GoodsProcess extends NetProcess {
 			Gson gson = new Gson();
 			item = gson.fromJson(data, NotificationItem.class);
 			Map<String, Object> mapper = null;
+			
 			try {
 				mapper = TransferUtils.transferBean2Map(item);
 			} catch (TransferException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			//String sql = "insert into mySql values("+str+"DESC LIMIT 1)";
 			
 			if (mapper != null && mapper.containsKey("id")){
 				mapper.remove("id");
 			}
 				
-			int ret = table.insert(mapper);		// 插入
+			int ret = table.insert(mapper);		
 			NetLog.debug("123", ret+"");
-			//String _data=map.get("data");
+			LoginResult loginresult = new LoginResult();
+			String succeed = "succeed";
+			loginresult.setResult(succeed);
+			Map<String, Object> data1 = new HashMap<String, Object>();
+			String json = "";
+			((Map) data1).put("data1",loginresult);
+			ServerFlag flag = new ServerFlag();
+			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+			this.print(json);
 			
-			String str1 = String.format("{\"flag\":{\"errorType\":\"ok\"},\"data\":null}");
-										
-			this.print(str1);
 		}
 		
 		
@@ -231,18 +199,11 @@ public class GoodsProcess extends NetProcess {
 			{
 			 // log error
 			}
-			//JSONArray jsonArray = JSONArray.fromObject(notifList); 
-			//String json = jsonArray.toString();
-			//ServerFlag flag = new ServerFlag();
-			//String json = new MakeJsonReturn().MakeJsonReturn(flag,jsonArray);
 			JSONObject obj = new JSONObject().fromObject(json);
 			JSONObject jsonData = null;
-			//JSONObject jsonResponse = null;
-			//jsonResponse = new JSONObject(json);
 			jsonData = obj.getJSONObject("data");
 			NetLog.debug("123",jsonData.toString());
 			NetLog.debug("12345",json);
-			//String str = String.format("{\"flag\":{\"errorType\":\"ok\"},\"data\":\"%s\"}",json);
 			this.print(json);
 		}
 		

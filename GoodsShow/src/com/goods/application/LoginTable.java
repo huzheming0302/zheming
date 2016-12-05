@@ -29,8 +29,8 @@ public class LoginTable extends NetTable {
 		
 		String mySql = "CREATE TABLE IF NOT EXISTS " + this.getTableName() +" (";
 		
-		mySql += "id int not null primary key auto_increment,";
-		mySql += "phonenumber VARCHAR(11) not null,";
+		//mySql += "id int not null primary key auto_increment,";
+		mySql += "phonenumber VARCHAR(11) not null primary key,";
 		mySql += "password VARCHAR(100) default '') ENGINE=InnoDB DEFAULT CHARSET=utf8";
 		
 		db.createTable(mySql);

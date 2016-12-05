@@ -14,9 +14,9 @@
     	<TextView
     	    android:id="@+id/TextView01" 
         	android:layout_width="wrap_content"
-       		android:layout_height="wrap_content"
-       		android:background="#FFF5EE"
-        	android:text="@string/hello_world" />
+       		android:layout_height="wrap_content"/>
+       		
+        	
     	<Button 
         	android:id="@+id/BtnAdd" 
        		android:width="160dip" 
