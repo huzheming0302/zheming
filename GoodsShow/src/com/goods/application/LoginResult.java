@@ -2,16 +2,17 @@ package com.goods.application;
 
 public class LoginResult {
 	
-	private String result = "";
+	private String password = "";
+	
 	public LoginResult()
 	{
-		result = "不存在该用户";
+		password = "不存在该用户";
 	}
-	public String getResult() {
-		return result;
+	public String getPassword() {
+		return password;
 	}
-	public void setResult(String result) {
-		this.result = result;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

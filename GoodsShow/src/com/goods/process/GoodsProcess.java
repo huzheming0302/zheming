@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import net.sf.json.JSONObject;
+
 import com.goods.application.GoodsConfig;
 import com.goods.application.LoginItem;
 import com.goods.application.LoginResult;
@@ -12,6 +14,7 @@ import com.goods.application.LoginTable;
 import com.goods.application.NotificationItem;
 import com.goods.application.NotificationTable;
 import com.google.gson.Gson;
+
 import exhi.net.database.DatabaseParam;
 import exhi.net.log.NetLog;
 import exhi.net.netty.NetProcess;
@@ -60,7 +63,7 @@ public class GoodsProcess extends NetProcess {
 			item = gson.fromJson(data, LoginItem.class);
 			Map<String, Object> mapper = null;
 			String phonenumber = "";
-			
+			//String password = "";
 			try {
 				mapper = TransferUtils.transferBean2Map(item);
 			} catch (TransferException e) {
@@ -69,9 +72,58 @@ public class GoodsProcess extends NetProcess {
 			
 			if (mapper != null && mapper.containsKey("phonenumber")){
 				phonenumber = mapper.get("phonenumber").toString();
+				//password = mapper.get("password").toString();
 			}
-			
 			List<LoginItem> loginList = null;
+			loginList=table.queryList(0,-1,phonenumber);
+			//LoginResult loginresult = new LoginResult();
+			String json = "";
+			Map<String, Object> data1 = new HashMap<String, Object>();
+			if (!loginList.isEmpty() && loginList.size() == 1){
+				LoginItem loginitem = loginList.get(0);
+				/*String password = "";
+				String token = "";
+				password = loginitem.getPassword();
+				token = loginitem.getToken();*/
+				//Map<String, Object> data1 = new HashMap<String, Object>();
+				((Map) data1).put("data1",loginitem);
+			}else {
+				//Map<String, Object> data1 = new HashMap<String, Object>();
+				String noresult = "noresult";
+				LoginItem loginitem = new LoginItem();
+				loginitem.setPassword(noresult);
+				loginitem.setToken(noresult);
+				((Map) data1).put("data1",loginitem);
+			}
+			ServerFlag flag = new ServerFlag();
+			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+			this.print(json);
+			
+			/*boolean correct = true;
+			String json = "";
+			LoginResult loginresult = new LoginResult();
+			correct = table.checkPhonenumber(phonenumber, password);
+			if (correct == true){
+				Map<String, Object> data1 = new HashMap<String, Object>();
+				//String succeed = "succeed";
+				loginresult.setResult(phonenumber);
+				((Map) data1).put("data1",loginresult);
+				ServerFlag flag = new ServerFlag();
+				json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+				this.print(json);
+			}
+			if (correct == false){
+				Map<String, Object> data1 = new HashMap<String, Object>();
+				String noresult = "noresult";
+				loginresult.setResult(noresult);
+				((Map) data1).put("data1",loginresult);
+				ServerFlag flag = new ServerFlag();
+				json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+				this.print(json);
+			}*/
+			
+			
+			/*List<LoginItem> loginList = null;
 			loginList=table.queryList(0,-1,phonenumber);
 			LoginResult loginresult = new LoginResult();
 			String noresult = "noresult";
@@ -96,7 +148,7 @@ public class GoodsProcess extends NetProcess {
 				json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
 				this.print(json);
 				
-			}
+			}*/
 		}
 		
 		if (path.equals("\\v1\\register"))
@@ -108,7 +160,7 @@ public class GoodsProcess extends NetProcess {
 			item = gson.fromJson(data, LoginItem.class);
 			Map<String, Object> mapper = null;
 			String phonenumber = "";
-			
+			String password = "";
 			try {
 				mapper = TransferUtils.transferBean2Map(item);
 			} catch (TransferException e) {
@@ -116,11 +168,42 @@ public class GoodsProcess extends NetProcess {
 				e.printStackTrace();
 			}
 			
-			if (mapper != null && mapper.containsKey("phonenumber")){
+			if (mapper != null && mapper.containsKey("phonenumber")&& mapper.containsKey("password")){
 				phonenumber = mapper.get("phonenumber").toString();
+				password = mapper.get("password").toString();
 			}
-			
 			List<LoginItem> loginList = null;
+			loginList=table.queryList(0,-1,phonenumber);
+			LoginResult loginresult = new LoginResult();
+			String json = "";
+			if (!loginList.isEmpty() && loginList.size() == 1){
+				String result = "ALREADY EXISTS";
+				loginresult.setPassword(result);
+			}else {
+				item = table.insertNewPhonenumber(phonenumber, password);
+				try {
+					mapper = TransferUtils.transferBean2Map(item);
+				} catch (TransferException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if (mapper != null && mapper.containsKey("id")){
+					mapper.remove("id");
+				}
+				int ret = table.insert(mapper);		// 插入
+				NetLog.debug("123", ret+"");
+				String succeed = "succeed";
+				loginresult.setPassword(succeed);
+			}
+			Map<String, Object> data1 = new HashMap<String, Object>();
+			((Map) data1).put("data1",loginresult);
+			ServerFlag flag = new ServerFlag();
+			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+			this.print(json);
+				
+		}
+			
+			/*List<LoginItem> loginList = null;
 			loginList=table.queryList(0,-1,phonenumber);
 			LoginResult loginresult = new LoginResult();
 			String json = "";
@@ -140,8 +223,8 @@ public class GoodsProcess extends NetProcess {
 			ServerFlag flag = new ServerFlag();
 			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
 			this.print(json);
-			
-		}
+			*/
+		
 		
 		if (path.equals("\\v1\\add"))
 		{	
@@ -167,7 +250,7 @@ public class GoodsProcess extends NetProcess {
 			NetLog.debug("123", ret+"");
 			LoginResult loginresult = new LoginResult();
 			String succeed = "succeed";
-			loginresult.setResult(succeed);
+			loginresult.setPassword(succeed);
 			Map<String, Object> data1 = new HashMap<String, Object>();
 			String json = "";
 			((Map) data1).put("data1",loginresult);
