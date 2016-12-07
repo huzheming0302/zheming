@@ -29,10 +29,11 @@ public class NotificationTable extends NetTable {
 		String mySql = "CREATE TABLE IF NOT EXISTS " + this.getTableName() +" (";
 		
 		mySql += "id int not null primary key auto_increment,";
+		mySql += "token VARCHAR(64) NOT NULL DEFAULT '',";
+		mySql += "phonenumber VARCHAR(11) not null,";
 		mySql += "date VARCHAR(100) not null,";
 		mySql += "event VARCHAR(100) not null DEFAULT '',";
 		mySql += "money VARCHAR(100) not null,";
-		
 		mySql += "remark VARCHAR(100) default '') ENGINE=InnoDB DEFAULT CHARSET=utf8";
 		
 		db.createTable(mySql);
@@ -102,7 +103,7 @@ public class NotificationTable extends NetTable {
 	{
 		List<NotificationItem> notifList = new ArrayList<NotificationItem>();
 
-		String sql = String.format("SELECT * FROM %s WHERE date = %s order by  id desc",this.getTableName(),map2.get("date"));
+		String sql = String.format("SELECT * FROM %s WHERE date = %s AND token = %s order by  id desc",this.getTableName(),map2.get("date"),map2.get("token"));
 		List<Map<String, Object>> list = this.query(sql);
 		if (list != null)
 		{
@@ -124,8 +125,8 @@ public class NotificationTable extends NetTable {
 	public int insert(NotificationItem item)
 	{
 		// insert
-		String sql = String.format("INSERT INTO %s (date,event,money,remark)"
-				+ " VALUES('%s','%s','%s','%s')", this.getTableName(), item.getDate(),item.getEvent(), item.getMoney(),item.getRemark());
+		String sql = String.format("INSERT INTO %s (date,event,money,remark,token,phonenumber)"
+				+ " VALUES('%s','%s','%s','%s','%s','%s')", this.getTableName(), item.getDate(),item.getEvent(), item.getMoney(),item.getRemark(),item.getToken(),item.getPhonenumber());
 		return this.insertEx(sql);
 	}
 	

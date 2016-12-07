@@ -91,7 +91,7 @@ public class LoginTable extends NetTable {
 		return null;*/
 	}
 	
-	private String makeRandCode()
+	public String makeRandCode()
 	{
 		return String.format("%d", (new Random()).nextInt(1000000));
 	}
@@ -153,10 +153,15 @@ public class LoginTable extends NetTable {
 		return token.equals(loginitem.getToken());
 	}
 	
-	public boolean updateRandCode(String phonenumber, String password)
+	public void updateRandCode(String phonenumber, String token,String password)
+	{	
+		
+	}
+	
+	/*public boolean updateRandCode(String phonenumber, String password)
 	{	
 		return this.updateRandCode(phonenumber, password, 0);
-	}
+	}*/
 	
 	public boolean updateRandCode(String phonenumber, String password, int device)
 	{
@@ -184,12 +189,14 @@ public class LoginTable extends NetTable {
 				newPassword = makeMd5(password + token);
 				String sql = String.format("UPDATE %s SET password='%s', token='%s', device=%d WHERE %s LIKE '%s'",
 						this.getTableName(), newPassword, token, device, FIELDS_ACCOUNT, phonenumber);
-				retval = this.update(sql);
+				this.update(sql);
 			}
 		}
 		
 		return retval;
 	}
+	
+	
 	
 	public LoginItem queryPhonenumber(String phonenumber)
 	{

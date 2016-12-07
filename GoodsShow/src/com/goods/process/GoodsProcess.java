@@ -53,6 +53,44 @@ public class GoodsProcess extends NetProcess {
 		String data=map.get("data");
 		//String str=new Map2Json().simpleMapToJsonStr(map);
 		//System.out.println("str="+str);
+		if (path.equals("\\v1\\newtoken")){
+			
+			DatabaseParam param = GoodsConfig.instance().getDatabaseParam();
+			LoginTable table = new LoginTable(param);
+			LoginItem item = new LoginItem();
+			NotificationTable table2 = new NotificationTable(param);
+			NotificationItem item2 = new NotificationItem();
+			Gson gson = new Gson();
+			item = gson.fromJson(data, LoginItem.class);
+			item2 = gson.fromJson(data, NotificationItem.class);
+			Map<String, Object> mapper = null;
+			Map<String, Object> mapper2 = null;
+			String token = "";
+			String phonenumber = "";
+			String password = "";
+			//String password = "";
+			try {
+				mapper = TransferUtils.transferBean2Map(item);
+			} catch (TransferException e) {
+				e.printStackTrace();
+			}
+			if (mapper != null && mapper.containsKey("token") && mapper.containsKey("phonenumber") && mapper.containsKey("password")){
+				
+				token = mapper.get("token").toString();
+				phonenumber = mapper.get("phonenumber").toString();
+				password = mapper.get("password").toString();
+			}
+			String sql = String.format("UPDATE %s SET password='%s', token='%s' WHERE phonenumber='%s'",
+					table.getTableName(), password, token, phonenumber);
+			String sql2 = String.format("UPDATE %s SET token='%s' WHERE phonenumber='%s'",
+					table.getTableName(), token, phonenumber);
+			table.update(sql);
+			table2.update(sql2);
+				
+			
+			
+		}
+		
 		
 		if (path.equals("\\v1\\verify"))
 		{
@@ -81,12 +119,18 @@ public class GoodsProcess extends NetProcess {
 			Map<String, Object> data1 = new HashMap<String, Object>();
 			if (!loginList.isEmpty() && loginList.size() == 1){
 				LoginItem loginitem = loginList.get(0);
-				/*String password = "";
-				String token = "";
-				password = loginitem.getPassword();
-				token = loginitem.getToken();*/
+				String oldpassword = "";
+				String oldtoken = "";
+				String newtoken = "";
+				newtoken = table.makeRandCode();
+				oldpassword = loginitem.getPassword();
+				oldtoken = loginitem.getToken();
+				LoginResult loginresult = new LoginResult();
+				loginresult.setPassword(oldpassword);
+				loginresult.setToken(oldtoken);
+				loginresult.setNewtoken(newtoken);
 				//Map<String, Object> data1 = new HashMap<String, Object>();
-				((Map) data1).put("data1",loginitem);
+				((Map) data1).put("data1",loginresult);
 			}else {
 				//Map<String, Object> data1 = new HashMap<String, Object>();
 				String noresult = "noresult";
@@ -98,57 +142,6 @@ public class GoodsProcess extends NetProcess {
 			ServerFlag flag = new ServerFlag();
 			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
 			this.print(json);
-			
-			/*boolean correct = true;
-			String json = "";
-			LoginResult loginresult = new LoginResult();
-			correct = table.checkPhonenumber(phonenumber, password);
-			if (correct == true){
-				Map<String, Object> data1 = new HashMap<String, Object>();
-				//String succeed = "succeed";
-				loginresult.setResult(phonenumber);
-				((Map) data1).put("data1",loginresult);
-				ServerFlag flag = new ServerFlag();
-				json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
-				this.print(json);
-			}
-			if (correct == false){
-				Map<String, Object> data1 = new HashMap<String, Object>();
-				String noresult = "noresult";
-				loginresult.setResult(noresult);
-				((Map) data1).put("data1",loginresult);
-				ServerFlag flag = new ServerFlag();
-				json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
-				this.print(json);
-			}*/
-			
-			
-			/*List<LoginItem> loginList = null;
-			loginList=table.queryList(0,-1,phonenumber);
-			LoginResult loginresult = new LoginResult();
-			String noresult = "noresult";
-			String json = "";
-			
-			if (!loginList.isEmpty() && loginList.size() == 1){
-				LoginItem item2 = new LoginItem();
-				item2 = loginList.get(0);
-				String result = item2.getPassword();
-				Map<String, Object> data1 = new HashMap<String, Object>();
-				((Map) data1).put("data1",item2);
-				ServerFlag flag = new ServerFlag();
-				json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
-				this.print(json);
-			}
-			
-			if (loginList.isEmpty()) {
-				Map<String, Object> data1 = new HashMap<String, Object>();
-				loginresult.setResult(noresult);
-				((Map) data1).put("data1",loginresult);
-				ServerFlag flag = new ServerFlag();
-				json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
-				this.print(json);
-				
-			}*/
 		}
 		
 		if (path.equals("\\v1\\register"))
@@ -203,29 +196,6 @@ public class GoodsProcess extends NetProcess {
 				
 		}
 			
-			/*List<LoginItem> loginList = null;
-			loginList=table.queryList(0,-1,phonenumber);
-			LoginResult loginresult = new LoginResult();
-			String json = "";
-			
-			if (!loginList.isEmpty() && loginList.size() == 1){
-				String result = "ALREADY EXISTS";
-				loginresult.setResult(result);
-			}else {
-				int ret = table.insert(mapper);		// 插入
-				NetLog.debug("123", ret+"");
-				String succeed = "succeed";
-				loginresult.setResult(succeed);
-			}
-			
-			Map<String, Object> data1 = new HashMap<String, Object>();
-			((Map) data1).put("data1",loginresult);
-			ServerFlag flag = new ServerFlag();
-			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
-			this.print(json);
-			*/
-		
-		
 		if (path.equals("\\v1\\add"))
 		{	
 			DatabaseParam param = GoodsConfig.instance().getDatabaseParam();

@@ -1,7 +1,10 @@
 package com.goods.application;
 
+
+
 public class LoginItem {
 	
+	 
 	private int id;
 	private String phonenumber = "";
 	private String password = "";
@@ -34,6 +37,8 @@ public class LoginItem {
 		this.password = password;
 	}
 	public String getToken() {
+		//判断是否为第一次执行getToken
+		
 		return token;
 	}
 

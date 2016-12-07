@@ -8,9 +8,9 @@ public class NotificationItem {
 	private String date;
 	private String event = "111";
 	private String money = "1";
-	
 	private String remark = "нч";
-	
+	private String token = "";
+	private String phonenumber = "";
 	public NotificationItem()
 	{
 		id = 10;
@@ -18,6 +18,8 @@ public class NotificationItem {
 		money = "-1";
 		event = "111";
 		remark = "нч";
+		token = "нч";
+		phonenumber = "12345678901";
 	}
 	
 	public int getId() {
@@ -51,5 +53,20 @@ public class NotificationItem {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+	public String getPhonenumber() {
+		return phonenumber;
+	}
+
+	public void setPhonenumber(String phonenumber) {
+		this.phonenumber = phonenumber;
 	}
 }
