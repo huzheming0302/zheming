@@ -30,7 +30,7 @@ public class NotificationTable extends NetTable {
 		
 		mySql += "id int not null primary key auto_increment,";
 		mySql += "token VARCHAR(64) NOT NULL DEFAULT '',";
-		mySql += "phonenumber VARCHAR(11) not null,";
+		//mySql += "phonenumber VARCHAR(11) not null,";
 		mySql += "date VARCHAR(100) not null,";
 		mySql += "event VARCHAR(100) not null DEFAULT '',";
 		mySql += "money VARCHAR(100) not null,";
@@ -125,8 +125,8 @@ public class NotificationTable extends NetTable {
 	public int insert(NotificationItem item)
 	{
 		// insert
-		String sql = String.format("INSERT INTO %s (date,event,money,remark,token,phonenumber)"
-				+ " VALUES('%s','%s','%s','%s','%s','%s')", this.getTableName(), item.getDate(),item.getEvent(), item.getMoney(),item.getRemark(),item.getToken(),item.getPhonenumber());
+		String sql = String.format("INSERT INTO %s (date,event,money,remark,token)"
+				+ " VALUES('%s','%s','%s','%s','%s')", this.getTableName(), item.getDate(),item.getEvent(), item.getMoney(),item.getRemark(),item.getToken());
 		return this.insertEx(sql);
 	}
 	

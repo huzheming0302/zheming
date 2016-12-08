@@ -10,7 +10,7 @@ public class NotificationItem {
 	private String money = "1";
 	private String remark = "нч";
 	private String token = "";
-	private String phonenumber = "";
+	//private String phonenumber = "";
 	public NotificationItem()
 	{
 		id = 10;
@@ -19,7 +19,7 @@ public class NotificationItem {
 		event = "111";
 		remark = "нч";
 		token = "нч";
-		phonenumber = "12345678901";
+		//phonenumber = "12345678901";
 	}
 	
 	public int getId() {
@@ -62,11 +62,11 @@ public class NotificationItem {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public String getPhonenumber() {
+	/*public String getPhonenumber() {
 		return phonenumber;
 	}
 
 	public void setPhonenumber(String phonenumber) {
 		this.phonenumber = phonenumber;
-	}
+	}*/
 }

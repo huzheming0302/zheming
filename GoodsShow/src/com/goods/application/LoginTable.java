@@ -36,10 +36,11 @@ public class LoginTable extends NetTable {
 		
 		mySql += "id INT NOT NULL AUTO_INCREMENT,";
 		mySql += "PRIMARY KEY (id),";
-		mySql += "device VARCHAR(64),";
+		//mySql += "device VARCHAR(64),";
 		//mySql += "id int not null primary key auto_increment,";
 		mySql += "phonenumber VARCHAR(11) not null,";
-		mySql += "token VARCHAR(64) NOT NULL DEFAULT '',";
+		mySql += "newtoken VARCHAR(64) NOT NULL DEFAULT '',";
+		mySql += "oldtoken VARCHAR(64) NOT NULL DEFAULT '',";
 		mySql += "password VARCHAR(100) default '') ENGINE=InnoDB DEFAULT CHARSET=utf8";
 		
 		db.createTable(mySql);
@@ -66,7 +67,7 @@ public class LoginTable extends NetTable {
 			String token = makeRandCode();
 			loginitem.setPassword(makeMd5(password+token));
 			loginitem.setPhonenumber(phonenumber);
-			loginitem.setToken(token);
+			loginitem.setNewtoken(token);
 			
 			
 			return loginitem;
@@ -127,7 +128,7 @@ public class LoginTable extends NetTable {
 		
 		if (loginitem != null)
 		{
-			password = makeMd5(password + loginitem.getToken());
+			password = makeMd5(password + loginitem.getNewtoken());
 			return (phonenumber.equals(loginitem.getPhonenumber()) && password.equals(loginitem.getPassword()));
 		}
 		else
@@ -150,7 +151,7 @@ public class LoginTable extends NetTable {
 			return false;
 		}
 		
-		return token.equals(loginitem.getToken());
+		return token.equals(loginitem.getNewtoken());
 	}
 	
 	public void updateRandCode(String phonenumber, String token,String password)
@@ -175,10 +176,10 @@ public class LoginTable extends NetTable {
 		LoginItem loginitem = queryPhonenumber(phonenumber);
 		if (loginitem != null)
 		{
-			String newPassword = makeMd5(password + loginitem.getToken());
+			String newPassword = makeMd5(password + loginitem.getNewtoken());
 			if (newPassword.equals(loginitem.getPassword()))
 			{
-				String token = loginitem.getToken();
+				String token = loginitem.getNewtoken();
 				
 				if (device == 0)
 				
@@ -227,9 +228,9 @@ public class LoginTable extends NetTable {
 		LoginItem loginitem = queryPhonenumber(phonenumber);
 		if (loginitem != null)
 		{
-			newPassword = makeMd5(newPassword + loginitem.getToken());
+			newPassword = makeMd5(newPassword + loginitem.getNewtoken());
 			String sql = String.format("UPDATE %s SET password='%s', token='%s' WHERE %s LIKE '%s'",
-					this.getTableName(), newPassword, loginitem.getToken(), FIELDS_ACCOUNT, phonenumber);
+					this.getTableName(), newPassword, loginitem.getNewtoken(), FIELDS_ACCOUNT, phonenumber);
 			if (this.update(sql))
 			{
 				retval = queryPhonenumber(phonenumber);

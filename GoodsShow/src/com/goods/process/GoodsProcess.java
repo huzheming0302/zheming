@@ -59,38 +59,42 @@ public class GoodsProcess extends NetProcess {
 			LoginTable table = new LoginTable(param);
 			LoginItem item = new LoginItem();
 			NotificationTable table2 = new NotificationTable(param);
-			NotificationItem item2 = new NotificationItem();
 			Gson gson = new Gson();
 			item = gson.fromJson(data, LoginItem.class);
-			item2 = gson.fromJson(data, NotificationItem.class);
 			Map<String, Object> mapper = null;
-			Map<String, Object> mapper2 = null;
-			String token = "";
-			String phonenumber = "";
+			String oldtoken = "";
+			String newtoken = "";
 			String password = "";
-			//String password = "";
 			try {
 				mapper = TransferUtils.transferBean2Map(item);
 			} catch (TransferException e) {
 				e.printStackTrace();
 			}
-			if (mapper != null && mapper.containsKey("token") && mapper.containsKey("phonenumber") && mapper.containsKey("password")){
+			if (mapper != null && mapper.containsKey("oldtoken") && mapper.containsKey("newtoken") && mapper.containsKey("password")){
 				
-				token = mapper.get("token").toString();
-				phonenumber = mapper.get("phonenumber").toString();
+				oldtoken = mapper.get("oldtoken").toString();
+				newtoken = mapper.get("newtoken").toString();
 				password = mapper.get("password").toString();
 			}
-			String sql = String.format("UPDATE %s SET password='%s', token='%s' WHERE phonenumber='%s'",
-					table.getTableName(), password, token, phonenumber);
-			String sql2 = String.format("UPDATE %s SET token='%s' WHERE phonenumber='%s'",
-					table.getTableName(), token, phonenumber);
+			
+			String sql = String.format("UPDATE %s SET password='%s', oldtoken='%s' ,newtoken='%s'WHERE newtoken='%s'",
+					table.getTableName(), password, oldtoken,newtoken, oldtoken);
+			String sql2 = String.format("UPDATE %s SET token='%s' WHERE token='%s'",
+					table2.getTableName(), newtoken, oldtoken);
 			table.update(sql);
 			table2.update(sql2);
-				
 			
-			
+			LoginResult loginresult = new LoginResult();
+			String succeed = "succeed";
+			loginresult.setPassword(succeed);
+			loginresult.setToken(newtoken);
+			Map<String, Object> data1 = new HashMap<String, Object>();
+			String json = "";
+			((Map) data1).put("data1",loginresult);
+			ServerFlag flag = new ServerFlag();
+			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+			this.print(json);
 		}
-		
 		
 		if (path.equals("\\v1\\verify"))
 		{
@@ -101,7 +105,6 @@ public class GoodsProcess extends NetProcess {
 			item = gson.fromJson(data, LoginItem.class);
 			Map<String, Object> mapper = null;
 			String phonenumber = "";
-			//String password = "";
 			try {
 				mapper = TransferUtils.transferBean2Map(item);
 			} catch (TransferException e) {
@@ -110,11 +113,9 @@ public class GoodsProcess extends NetProcess {
 			
 			if (mapper != null && mapper.containsKey("phonenumber")){
 				phonenumber = mapper.get("phonenumber").toString();
-				//password = mapper.get("password").toString();
 			}
 			List<LoginItem> loginList = null;
 			loginList=table.queryList(0,-1,phonenumber);
-			//LoginResult loginresult = new LoginResult();
 			String json = "";
 			Map<String, Object> data1 = new HashMap<String, Object>();
 			if (!loginList.isEmpty() && loginList.size() == 1){
@@ -124,19 +125,17 @@ public class GoodsProcess extends NetProcess {
 				String newtoken = "";
 				newtoken = table.makeRandCode();
 				oldpassword = loginitem.getPassword();
-				oldtoken = loginitem.getToken();
+				oldtoken = loginitem.getNewtoken();
 				LoginResult loginresult = new LoginResult();
 				loginresult.setPassword(oldpassword);
 				loginresult.setToken(oldtoken);
 				loginresult.setNewtoken(newtoken);
-				//Map<String, Object> data1 = new HashMap<String, Object>();
 				((Map) data1).put("data1",loginresult);
 			}else {
-				//Map<String, Object> data1 = new HashMap<String, Object>();
 				String noresult = "noresult";
 				LoginItem loginitem = new LoginItem();
 				loginitem.setPassword(noresult);
-				loginitem.setToken(noresult);
+				loginitem.setNewtoken(noresult);
 				((Map) data1).put("data1",loginitem);
 			}
 			ServerFlag flag = new ServerFlag();
@@ -157,7 +156,6 @@ public class GoodsProcess extends NetProcess {
 			try {
 				mapper = TransferUtils.transferBean2Map(item);
 			} catch (TransferException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -177,7 +175,6 @@ public class GoodsProcess extends NetProcess {
 				try {
 					mapper = TransferUtils.transferBean2Map(item);
 				} catch (TransferException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				if (mapper != null && mapper.containsKey("id")){

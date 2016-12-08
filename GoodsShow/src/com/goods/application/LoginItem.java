@@ -8,8 +8,9 @@ public class LoginItem {
 	private int id;
 	private String phonenumber = "";
 	private String password = "";
-	private String token = "";
-	private String device = "";
+	private String newtoken = "";
+	private String oldtoken = "";
+	//private String device = "";
 	
 	public LoginItem()
 	{
@@ -36,21 +37,30 @@ public class LoginItem {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getToken() {
+	public String getNewtoken() {
 		//判断是否为第一次执行getToken
 		
-		return token;
+		return newtoken;
 	}
 
-	public void setToken(String token) {
-		this.token = token;
+	public void setNewtoken(String newtoken) {
+		this.newtoken = newtoken;
 	}
-	public String getDevice() {
+	public String getOldtoken() {
+		//判断是否为第一次执行getToken
+		
+		return oldtoken;
+	}
+
+	public void setOldtoken(String oldtoken) {
+		this.oldtoken = oldtoken;
+	}
+	/*public String getDevice() {
 		return device;
 	}
 
 	public void setDevice(String device) {
 		this.device = device;
-	}
+	}*/
 	
 }
