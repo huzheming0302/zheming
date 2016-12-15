@@ -96,14 +96,16 @@
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="cancle" />
+            android:text="cancel" />
         <Button
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="return" />
+        
             
   	</LinearLayout>
+  	
     
 
 </LinearLayout>
