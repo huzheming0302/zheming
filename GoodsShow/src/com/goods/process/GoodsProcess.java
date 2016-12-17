@@ -1,6 +1,7 @@
 package com.goods.process;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,8 +52,7 @@ public class GoodsProcess extends NetProcess {
 		mWebUtil.setTemplatePath(tempFile.getParent());
 		Map<String, String> map =request;
 		String data=map.get("data");
-		//String str=new Map2Json().simpleMapToJsonStr(map);
-		//System.out.println("str="+str);
+		
 		if (path.equals("\\v1\\newtoken")){
 			
 			DatabaseParam param = GoodsConfig.instance().getDatabaseParam();
@@ -212,9 +212,7 @@ public class GoodsProcess extends NetProcess {
 			if (mapper != null && mapper.containsKey("id")){
 				mapper.remove("id");
 			}
-				
-			int ret = table.insert(mapper);		
-			NetLog.debug("123", ret+"");
+			table.insert(mapper);		
 			LoginResult loginresult = new LoginResult();
 			String succeed = "succeed";
 			loginresult.setPassword(succeed);
@@ -237,24 +235,120 @@ public class GoodsProcess extends NetProcess {
 			List<NotificationItem> notifList = null;
 			notifList=table.queryList(0,-1,map2);
 			String json = "";
-			if (notifList != null && notifList.size()>0)
-			{
-				Map<String, Object> data1 = new HashMap<String, Object>();
-				((Map) data1).put("data1",notifList);
-				ServerFlag flag = new ServerFlag();
-				json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
-				
-			}
-			else
-			{
-			 // log error
-			}
-			JSONObject obj = new JSONObject().fromObject(json);
-			JSONObject jsonData = null;
-			jsonData = obj.getJSONObject("data");
-			NetLog.debug("123",jsonData.toString());
-			NetLog.debug("12345",json);
+			Map<String, Object> data1 = new HashMap<String, Object>();
+			((Map) data1).put("data1",notifList);
+			ServerFlag flag = new ServerFlag();
+			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
 			this.print(json);
+		}
+		
+		if (path.equals("\\v1\\update"))
+		{	
+			DatabaseParam param = GoodsConfig.instance().getDatabaseParam();
+			NotificationTable table = new NotificationTable(param);
+			NotificationItem item = new NotificationItem();
+			Gson gson = new Gson();
+			item = gson.fromJson(data, NotificationItem.class);
+			Map<String, Object> mapper = null;
+			
+			try {
+				mapper = TransferUtils.transferBean2Map(item);
+			} catch (TransferException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			int id = -1;
+			String date = "";
+			String money = "";
+			String event = "";
+			String remark = "";
+			String token = "";
+			String olddate = "";
+			
+			if (mapper != null && mapper.containsKey("id")){
+				id = (int) mapper.get("id");
+				date = mapper.get("date").toString();
+				money = mapper.get("money").toString();
+				event = mapper.get("event").toString();
+				remark = mapper.get("remark").toString();
+				token = mapper.get("token").toString();
+				olddate = mapper.get("olddate").toString();
+			}
+			String sql = String.format("UPDATE %s SET date='%s',olddate='%s', money='%s' ,event='%s', remark='%s'WHERE token='%s' AND id='%s'",
+					table.getTableName(), date, olddate,money,event, remark,token,id);	
+			table.update(sql);
+			
+			Map<String ,String> mapper2 = new HashMap<String ,String>();
+			mapper2.put("date", olddate);
+			mapper2.put("token", token);
+			List<NotificationItem> notifList = null;
+			notifList=table.queryList(0,-1,mapper2);
+			String json = "";
+			
+			Map<String, Object> data1 = new HashMap<String, Object>();
+			((Map) data1).put("data1",notifList);
+			ServerFlag flag = new ServerFlag();
+			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+			this.print(json);
+		}
+		
+		if (path.equals("\\v1\\delete"))
+		{
+			DatabaseParam param = GoodsConfig.instance().getDatabaseParam();
+			NotificationTable table = new NotificationTable(param);
+			NotificationItem item = new NotificationItem();
+			Gson gson = new Gson();
+			item = gson.fromJson(data, NotificationItem.class);
+			Map<String, Object> mapper = null;
+			NetLog.debug(address, "1");
+			
+			try {
+				mapper = TransferUtils.transferBean2Map(item);
+			} catch (TransferException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			int id = -1;
+			String date = "";
+			String token = "";
+			if (mapper != null && mapper.containsKey("id")){
+				id = (int) mapper.get("id");
+				date = mapper.get("date").toString();
+				token = mapper.get("token").toString();
+				NetLog.debug(address, "2");
+			}
+			String sql = String.format("DELETE FROM %s where id=%d AND token=%s", table.getTableName(), id,token);	
+			table.update(sql);
+			NetLog.debug(address, "3");
+			
+			Map<String ,String> mapper2 = new HashMap<String ,String>();
+			mapper2.put("date", date);
+			mapper2.put("token", token);
+			List<NotificationItem> notifList = null;
+			notifList = table.queryList(0,-1,mapper2);
+			String json = "";
+			
+			Map<String, Object> data1 = new HashMap<String, Object>();
+			((Map) data1).put("data1",notifList);
+			ServerFlag flag = new ServerFlag();
+			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+			this.print(json);
+			
+			/*Map<String ,Object> mapper2 = new HashMap<String ,Object>();
+			LoginResult result = new LoginResult();
+			List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+			mapper2.put("delete_success", result);
+			list.add(mapper2);
+			NetLog.debug(address, "4");
+			Map<String, Object> data1 = new HashMap<String, Object>();
+			((Map) data1).put("data1",list);
+			ServerFlag flag = new ServerFlag();
+			String json = "";
+			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+			this.print(json);*/
+			
 		}
 		
 			

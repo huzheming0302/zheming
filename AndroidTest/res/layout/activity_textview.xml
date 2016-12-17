@@ -58,16 +58,11 @@
             android:layout_height="wrap_content"
             android:text="@string/amendment" />
         <Button
-            android:id="@+id/make_sure"
+            android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/make_sure" />
-        <Button
-            android:id="@+id/cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancel" />
-     	
+            android:text="@string/delete" />
+        
 	</LinearLayout>
 	
 </LinearLayout>

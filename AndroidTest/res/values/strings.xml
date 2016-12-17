@@ -47,6 +47,7 @@
 	<string name="start_using">开始使用</string>
 	<string name="amendment">修改</string>
 	<string name="make_sure">确定</string>
+	<string name="sure_delete">确定要删除这条记录么？</string>
 	
 	
 </resources>

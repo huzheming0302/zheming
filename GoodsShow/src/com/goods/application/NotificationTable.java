@@ -32,6 +32,7 @@ public class NotificationTable extends NetTable {
 		mySql += "token VARCHAR(64) NOT NULL DEFAULT '',";
 		//mySql += "phonenumber VARCHAR(11) not null,";
 		mySql += "date VARCHAR(100) not null,";
+		mySql += "olddate VARCHAR(100) not null,";
 		mySql += "event VARCHAR(100) not null DEFAULT '',";
 		mySql += "money VARCHAR(100) not null,";
 		mySql += "remark VARCHAR(100) default '') ENGINE=InnoDB DEFAULT CHARSET=utf8";
@@ -125,8 +126,10 @@ public class NotificationTable extends NetTable {
 	public int insert(NotificationItem item)
 	{
 		// insert
-		String sql = String.format("INSERT INTO %s (date,event,money,remark,token)"
-				+ " VALUES('%s','%s','%s','%s','%s')", this.getTableName(), item.getDate(),item.getEvent(), item.getMoney(),item.getRemark(),item.getToken());
+		String sql = String.format("INSERT INTO %s (date,olddate,event,money,remark,token)"
+				+ " VALUES('%s','%s','%s','%s','%s','%s'')", 
+				this.getTableName(), item.getDate(),item.getOlddate(),item.getEvent(), 
+				item.getMoney(),item.getRemark(),item.getToken());
 		return this.insertEx(sql);
 	}
 	

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/exit_layout"
-        android:layout_width="280dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
@@ -10,12 +10,17 @@
         <LinearLayout
         	android:layout_width="match_parent"
         	android:layout_height="wrap_content"
+        	android:layout_marginTop="10dp"
+        	android:layout_marginLeft="10dp"
+        	android:layout_marginRight="10dp"
         	android:orientation="horizontal" >
 
         	<TextView
             	android:id="@+id/textview01"
             	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
+            	android:layout_height="30dp"
+            	android:textSize="10sp"
+            	android:background="@drawable/btn_style_green"
             	android:text="@string/date" />
 
         	<EditText
@@ -33,12 +38,17 @@
         <LinearLayout
         	android:layout_width="match_parent"
         	android:layout_height="wrap_content"
+        	android:layout_marginTop="1dp"
+        	android:layout_marginLeft="10dp"
+        	android:layout_marginRight="10dp"
         	android:orientation="horizontal" >
 
         	<TextView
             	android:id="@+id/textview02"
             	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
+            	android:layout_height="30dp"
+            	android:textSize="10sp"
+            	android:background="@drawable/btn_style_green"
             	android:text="@string/money" />
 
         	<EditText
@@ -55,13 +65,18 @@
         <LinearLayout
         	android:layout_width="match_parent"
         	android:layout_height="wrap_content"
+        	android:layout_marginTop="1dp"
+        	android:layout_marginLeft="10dp"
+        	android:layout_marginRight="10dp"
         	android:orientation="horizontal" >
 
         	<TextView
-            	android:id="@+id/textview03"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:text="@string/event" />
+        	    android:id="@+id/textview03"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="30dp"
+        	    android:textSize="10sp"
+        	    android:background="@drawable/btn_style_green"
+        	    android:text="@string/event" />
 
         	<EditText
             	android:id="@+id/editText03"
@@ -77,20 +92,25 @@
         <LinearLayout
         	android:layout_width="match_parent"
         	android:layout_height="wrap_content"
+        	android:layout_marginTop="1dp"
+        	android:layout_marginLeft="10dp"
+        	android:layout_marginRight="10dp"
         	android:orientation="horizontal" >
 
         	<TextView
-            	android:id="@+id/textview04"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:text="@string/remark" />
+        	    android:id="@+id/textview04"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="30dp"
+        	    android:textSize="10sp"
+        	    android:background="@drawable/btn_style_green"
+        	    android:text="@string/remark" />
 
         	<EditText
             	android:id="@+id/editText04"
             	android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
             	android:layout_weight="1"
-            	android:lines="4" 
+            	android:lines="3" 
         		android:gravity="top"
             	android:ems="10">
 
@@ -102,7 +122,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"           
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="1dp"
              >
 
@@ -115,7 +135,7 @@
                 android:onClick="exitbutton0"
                 android:text="是"
                 android:textColor="#fff"
-                android:textSize="16sp" />
+                android:textSize="10sp" />
             
             <Button
               android:id="@+id/exitBtn1"
@@ -123,7 +143,7 @@
               android:layout_height="30dp"
               android:layout_marginLeft="10dp"
               android:text="否"
-              android:textSize="16sp"
+              android:textSize="10sp"
               android:textColor="#333"
               android:background="@drawable/btn_style_white"
               android:gravity="center"

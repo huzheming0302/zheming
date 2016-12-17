@@ -10,6 +10,7 @@ public class NotificationItem {
 	private String money = "1";
 	private String remark = "нч";
 	private String token = "";
+	private String olddate;
 	//private String phonenumber = "";
 	public NotificationItem()
 	{
@@ -19,6 +20,7 @@ public class NotificationItem {
 		event = "111";
 		remark = "нч";
 		token = "нч";
+		olddate = "0000-00-00 00:00:00";
 		//phonenumber = "12345678901";
 	}
 	
@@ -33,6 +35,12 @@ public class NotificationItem {
 	}
 	public void setDate(String date) {
 		this.date = date;
+	}
+	public String getOlddate() {
+		return olddate;
+	}
+	public void setOlddate(String olddate) {
+		this.olddate = olddate;
 	}
 	public String getEvent() {
 		return event;
