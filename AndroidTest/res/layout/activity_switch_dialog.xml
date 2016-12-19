@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:id="@+id/exit_layout"
+        android:background="@drawable/confirm_dialog_bg2" >
+    	<LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"           
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="5dp"
+             >
+			<TextView
+            	android:id="@+id/textview01"
+            	android:layout_width="wrap_content"
+            	android:layout_height="50dp"
+            	android:textSize="15sp"
+            	android:background="@drawable/btn_style_green"
+            	android:text="@string/change_acount" />
+			
+		</LinearLayout>
+		
+		<LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"           
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="1dp"
+             >
+
+            <Button
+                android:id="@+id/exitBtn0"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:background="@drawable/btn_style_green"
+                android:gravity="center"
+                android:onClick="exitbutton0"
+                android:text="是"
+                android:textColor="#fff"
+                android:textSize="10sp" />
+            
+            <Button
+              android:id="@+id/exitBtn1"
+              android:layout_width="50dp"
+              android:layout_height="30dp"
+              android:layout_marginLeft="10dp"
+              android:text="否"
+              android:textSize="10sp"
+              android:textColor="#333"
+              android:background="@drawable/btn_style_white"
+              android:gravity="center"
+			  android:onClick="exitbutton1"
+              />
+        </LinearLayout>
+        
+</LinearLayout>

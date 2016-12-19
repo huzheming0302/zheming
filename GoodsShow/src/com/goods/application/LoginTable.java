@@ -215,6 +215,22 @@ public class LoginTable extends NetTable {
 		return loginitem;
 	}
 	
+	public LoginItem queryToken(String token)
+	{
+		LoginItem loginitem = null;
+		
+		String sql = String.format("SELECT * FROM %s WHERE newtoken = '%s' ", this.getTableName(), token);
+		List<Map<String, Object>> listMap = this.query(sql);
+		
+		if (listMap != null && listMap.size() == 1)
+		{
+			Map<String, Object> map = listMap.get(0);
+			loginitem = MyUtils.transferMap2Bean(map, LoginItem.class);
+		}
+
+		return loginitem;
+	}
+	
 	public LoginItem updatePassword(String phonenumber, String password,
 			String newPassword) {
 		
@@ -283,6 +299,29 @@ public class LoginTable extends NetTable {
 		List<LoginItem> loginList = new ArrayList<LoginItem>();
 
 		String sql = String.format("SELECT * FROM %s WHERE phonenumber = %s ",this.getTableName(),number);
+		List<Map<String, Object>> list = this.query(sql);
+		if (list != null)
+		{
+			for(Map<String, Object> map : list)
+			{
+				LoginItem item = new LoginItem();
+				try {
+					item = TransferUtils.transferMap2Bean(map, LoginItem.class);
+					loginList.add(item);
+				} catch (TransferException e) {
+					NetLog.error("Transfer", e.getMessage());
+				}
+			}
+		}
+		
+		return loginList;
+	}
+	
+	public List<LoginItem> queryListbytoken (long limit, long offset,String token )
+	{
+		List<LoginItem> loginList = new ArrayList<LoginItem>();
+
+		String sql = String.format("SELECT * FROM %s WHERE newtoken = %s ",this.getTableName(),token);
 		List<Map<String, Object>> list = this.query(sql);
 		if (list != null)
 		{

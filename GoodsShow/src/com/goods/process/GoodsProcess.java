@@ -1,6 +1,5 @@
 package com.goods.process;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,22 +18,11 @@ import com.google.gson.Gson;
 import exhi.net.database.DatabaseParam;
 import exhi.net.log.NetLog;
 import exhi.net.netty.NetProcess;
-import exhi.net.netty.WebUtil;
 import exhi.net.utils.TransferException;
 import exhi.net.utils.TransferUtils;
 
 
 public class GoodsProcess extends NetProcess {
-	
-	private static final String TAG="GoodsProcess";
-
-	private WebUtil mWebUtil = null;
-	
-	public GoodsProcess()
-	{
-		mWebUtil = new WebUtil(this);
-	}
-	
 	
 	@Override
 	protected void onProcess(String address, String path, Map<String, String> request) {
@@ -45,13 +33,58 @@ public class GoodsProcess extends NetProcess {
 		NetLog.debug(address, "Work Path:" + this.getWorkPath());
 		NetLog.debug(address, "Uri = " + this.getUri());
 		
-		
-		File tempFile = new File(path);
-
-		NetLog.debug(address, "Parent path = " + tempFile.getParent());
-		mWebUtil.setTemplatePath(tempFile.getParent());
 		Map<String, String> map =request;
 		String data=map.get("data");
+		
+		if (path.equals("\\v1\\checktoken")){
+			DatabaseParam param = GoodsConfig.instance().getDatabaseParam();
+			LoginTable table = new LoginTable(param);
+			LoginItem item = new LoginItem();
+			Gson gson = new Gson();
+			item = gson.fromJson(data, LoginItem.class);
+			Map<String, Object> mapper = null;
+			String newtoken = "";
+			try {
+				mapper = TransferUtils.transferBean2Map(item);
+			} catch (TransferException e) {
+				e.printStackTrace();
+			}
+			if (mapper != null && mapper.containsKey("newtoken")) {
+				newtoken = mapper.get("newtoken").toString();
+			}
+			List<LoginItem> loginList = null;
+			loginList=table.queryListbytoken(0,-1,newtoken);
+			LoginResult loginresult = new LoginResult();
+			String json = "";
+			String result = "";
+			if (!loginList.isEmpty() && loginList.size() == 1){
+				result = "ALREADY EXISTS";
+				loginresult.setPassword(result);
+				loginresult.setToken(newtoken);
+			}else {
+				result = "NOT EXISTS";
+				loginresult.setPassword(result);
+				/*item = table.insertNewPhonenumber(phonenumber, password);
+				try {
+					mapper = TransferUtils.transferBean2Map(item);
+				} catch (TransferException e) {
+					e.printStackTrace();
+				}
+				if (mapper != null && mapper.containsKey("id")){
+					mapper.remove("id");
+				}
+				int ret = table.insert(mapper);		// 插入
+				NetLog.debug("123", ret+"");
+				String succeed = "succeed";
+				loginresult.setPassword(succeed);*/
+			}
+			Map<String, Object> data1 = new HashMap<String, Object>();
+			((Map) data1).put("data1",loginresult);
+			ServerFlag flag = new ServerFlag();
+			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+			this.print(json);
+			
+		}
 		
 		if (path.equals("\\v1\\newtoken")){
 			
@@ -279,16 +312,16 @@ public class GoodsProcess extends NetProcess {
 					table.getTableName(), date, olddate,money,event, remark,token,id);	
 			table.update(sql);
 			
-			Map<String ,String> mapper2 = new HashMap<String ,String>();
-			mapper2.put("date", olddate);
-			mapper2.put("token", token);
-			List<NotificationItem> notifList = null;
-			notifList=table.queryList(0,-1,mapper2);
-			String json = "";
-			
+			LoginResult result = new LoginResult();
+			String password = "update_success";
+			result.setPassword(password);
+			List<Object> list = new ArrayList<Object>();
+			list.add(result);
+			NetLog.debug(address, "4");
 			Map<String, Object> data1 = new HashMap<String, Object>();
-			((Map) data1).put("data1",notifList);
+			((Map) data1).put("data1",list);
 			ServerFlag flag = new ServerFlag();
+			String json = "";
 			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
 			this.print(json);
 		}
@@ -311,11 +344,9 @@ public class GoodsProcess extends NetProcess {
 			}
 			
 			int id = -1;
-			String date = "";
 			String token = "";
-			if (mapper != null && mapper.containsKey("id")){
+			if (mapper != null && mapper.containsKey("id") && mapper.containsKey("token")){
 				id = (int) mapper.get("id");
-				date = mapper.get("date").toString();
 				token = mapper.get("token").toString();
 				NetLog.debug(address, "2");
 			}
@@ -323,32 +354,18 @@ public class GoodsProcess extends NetProcess {
 			table.update(sql);
 			NetLog.debug(address, "3");
 			
-			Map<String ,String> mapper2 = new HashMap<String ,String>();
-			mapper2.put("date", date);
-			mapper2.put("token", token);
-			List<NotificationItem> notifList = null;
-			notifList = table.queryList(0,-1,mapper2);
-			String json = "";
-			
-			Map<String, Object> data1 = new HashMap<String, Object>();
-			((Map) data1).put("data1",notifList);
-			ServerFlag flag = new ServerFlag();
-			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
-			this.print(json);
-			
-			/*Map<String ,Object> mapper2 = new HashMap<String ,Object>();
 			LoginResult result = new LoginResult();
-			List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
-			mapper2.put("delete_success", result);
-			list.add(mapper2);
+			String password = "delete_success";
+			result.setPassword(password);
+			List<Object> list = new ArrayList<Object>();
+			list.add(result);
 			NetLog.debug(address, "4");
 			Map<String, Object> data1 = new HashMap<String, Object>();
 			((Map) data1).put("data1",list);
 			ServerFlag flag = new ServerFlag();
 			String json = "";
 			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
-			this.print(json);*/
-			
+			this.print(json);
 		}
 		
 			

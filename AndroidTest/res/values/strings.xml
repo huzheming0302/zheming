@@ -48,6 +48,8 @@
 	<string name="amendment">修改</string>
 	<string name="make_sure">确定</string>
 	<string name="sure_delete">确定要删除这条记录么？</string>
-	
-	
+	<string name="logout">退出</string>
+	<string name="sure_logout">退出账号并结束程序</string>
+	<string name="switch_account">切换账号</string>
+	<string name="change_acount">确定要切换账号吗?</string>
 </resources>
