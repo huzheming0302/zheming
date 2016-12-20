@@ -42,5 +42,6 @@
     <color name="orange">#FFA500</color>
     <color name="green">#6B8E23</color>
     <color name="gray">#44000000</color>
+    <color name="deep_blue">#ff003399</color>
 
 </resources>

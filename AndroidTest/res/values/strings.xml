@@ -52,4 +52,15 @@
 	<string name="sure_logout">退出账号并结束程序</string>
 	<string name="switch_account">切换账号</string>
 	<string name="change_acount">确定要切换账号吗?</string>
+	<string name="phone_number">账号</string>
+	<string name="password">密码</string>
+	<string name="forgot_password">忘记密码？</string>
+	<string name="new_acount">还没有账号？</string>
+	<string name="logout_app">退出程序</string>
+	<string name="get_back">返回</string>
+	<string name="get_acount">申请账号</string>
+	<string name="password_again">确认密码</string>
+	<string name="write_phonenumber">请输入手机号码</string>
+	<string name="write_password">请输入密码</string>
+	<string name="write_password_again">请再次输入密码</string>
 </resources>
