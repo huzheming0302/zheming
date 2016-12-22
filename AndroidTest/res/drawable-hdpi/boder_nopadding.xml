@@ -8,12 +8,6 @@
         android:width="0.01dp"  
         android:color="#000000" />  
   
-    <padding  
-        android:bottom="1dp"  
-        android:left="5dp"  
-        android:right="10dp"  
-        android:top="1dp" /> 
-        
     <corners android:topLeftRadius="5dp" android:topRightRadius="5dp"
 		android:bottomRightRadius="5dp" android:bottomLeftRadius="5dp"/>
 

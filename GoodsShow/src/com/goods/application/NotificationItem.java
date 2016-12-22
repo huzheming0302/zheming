@@ -15,7 +15,7 @@ public class NotificationItem {
 	public NotificationItem()
 	{
 		id = 10;
-		date = "2016-11-21 12:00:00";
+		date = "0000-00-00 00:00:00";
 		money = "-1";
 		event = "111";
 		remark = "нч";

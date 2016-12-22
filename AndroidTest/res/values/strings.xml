@@ -63,4 +63,6 @@
 	<string name="write_phonenumber">请输入手机号码</string>
 	<string name="write_password">请输入密码</string>
 	<string name="write_password_again">请再次输入密码</string>
+	<string name="last">亲，没有您的任何账单记录</string>
+	<string name="wenhou">这是您最近一次的消费记录</string>
 </resources>

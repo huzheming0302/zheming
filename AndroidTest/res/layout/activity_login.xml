@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_scrollview"
+    android:fillViewport="true"
+    android:overScrollMode="ifContentScrolls" >
+
+<RelativeLayout 
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/background_login"
     android:orientation="vertical" >
     
-    <LinearLayout
+    <RelativeLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal" 
+        android:id="@+id/relativelayout01">
 
         <ImageView 
             android:src="@drawable/login"
@@ -16,18 +25,22 @@
 		    android:layout_height="150dp"
 		    android:layout_alignParentTop="true" 
 		    android:layout_centerHorizontal="true" 
-		    android:layout_marginTop="20dp"
-		    android:layout_marginRight="100dp"
-		    android:layout_marginLeft="100dp"
-		    android:layout_marginBottom="10dp"
-            />
-    </LinearLayout>
-   <RelativeLayout 
+		    />
+    </RelativeLayout >
+	
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/relativelayout01"
         android:background="@drawable/background_login_div"
-        android:orientation="horizontal" >
-    
+        android:gravity="center_horizontal" >
+        
+   <RelativeLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_centerHorizontal="true"
+       android:background="@drawable/background_login_div"
+       android:gravity="fill" >
 
         <TextView
             android:id="@+id/phone_number"
@@ -35,8 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
 	  		android:layout_marginTop="5dp"
-	  		android:layout_marginLeft="45dp"
-            android:text="@string/phone_number" />
+	  		android:text="@string/phone_number" />
 
         <EditText
             android:id="@+id/phonenumber"
@@ -83,15 +95,15 @@
     	
         <Button
             android:id="@+id/button1"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/password"
             android:layout_alignRight="@+id/button3"
             android:layout_below="@id/password"
             android:layout_marginTop="15dp"
-            android:background="@drawable/btn_style_green"
-            android:paddingBottom="0px"
-            android:paddingTop="0px"
+            android:background="@drawable/boder_nopadding"
+            android:paddingBottom="0dp"
+            android:paddingTop="0dp"
             android:text="@string/login"
             android:textSize="20sp" 
             android:textColor="@color/blue"/>
@@ -102,7 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/password"
             android:layout_alignBottom="@+id/password"
-            android:layout_marginLeft="14dp"
+            android:layout_marginLeft="15dp"
             android:layout_toRightOf="@+id/password"
             android:background="@null"
             android:text="@string/forgetpassword" 
@@ -134,6 +146,6 @@
             android:textColor="@color/blue"/>
         
     </RelativeLayout> 
-    
-
-</LinearLayout>
+    </RelativeLayout> 
+</RelativeLayout> 
+</ScrollView>

@@ -86,7 +86,7 @@ public class GoodsProcess extends NetProcess {
 			
 		}
 		
-		if (path.equals("\\v1\\newtoken")){
+		if (path.equals("\\v1\\getInformation")){
 			
 			DatabaseParam param = GoodsConfig.instance().getDatabaseParam();
 			LoginTable table = new LoginTable(param);
@@ -116,7 +116,19 @@ public class GoodsProcess extends NetProcess {
 					table2.getTableName(), newtoken, oldtoken);
 			table.update(sql);
 			table2.update(sql2);
-			
+			/*List<NotificationItem> notifList = null;
+			notifList = table2.queryList(0,-1,newtoken);
+			NotificationItem lastcost = new NotificationItem();
+			lastcost = notifList.get(0);
+			if (notifList.size() == 0){
+				lastcost.setId(-1);
+			}
+			Map<String, Object> data1 = new HashMap<String, Object>();
+			String json = "";
+			((Map) data1).put("data1",lastcost);
+			ServerFlag flag = new ServerFlag();
+			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+			this.print(json);*/
 			LoginResult loginresult = new LoginResult();
 			String succeed = "succeed";
 			loginresult.setPassword(succeed);
@@ -225,7 +237,103 @@ public class GoodsProcess extends NetProcess {
 			this.print(json);
 				
 		}
+		if (path.equals("\\v1\\updateToken")){
 			
+			DatabaseParam param = GoodsConfig.instance().getDatabaseParam();
+			LoginTable table = new LoginTable(param);
+			LoginItem item = new LoginItem();
+			NotificationTable table2 = new NotificationTable(param);
+			Gson gson = new Gson();
+			item = gson.fromJson(data, LoginItem.class);
+			Map<String, Object> mapper = null;
+			String oldtoken = "";
+			String newtoken = "";
+			String password = "";
+			try {
+				mapper = TransferUtils.transferBean2Map(item);
+			} catch (TransferException e) {
+				e.printStackTrace();
+			}
+			if (mapper != null && mapper.containsKey("oldtoken") && mapper.containsKey("newtoken") && mapper.containsKey("password")){
+				
+				oldtoken = mapper.get("oldtoken").toString();
+				newtoken = mapper.get("newtoken").toString();
+				password = mapper.get("password").toString();
+			}
+			
+			String sql = String.format("UPDATE %s SET password='%s', oldtoken='%s' ,newtoken='%s'WHERE newtoken='%s'",
+					table.getTableName(), password, oldtoken,newtoken, oldtoken);
+			String sql2 = String.format("UPDATE %s SET token='%s' WHERE token='%s'",
+					table2.getTableName(), newtoken, oldtoken);
+			table.update(sql);
+			table2.update(sql2);
+			List<NotificationItem> notifList = null;
+			notifList = table2.queryList(0,-1,newtoken);
+			NotificationItem lastcost = new NotificationItem();
+			if (notifList.size() == 0){
+				lastcost.setId(-1);
+			}else {
+				lastcost = notifList.get(0);
+			}
+			Map<String, Object> data1 = new HashMap<String, Object>();
+			String json = "";
+			((Map) data1).put("data1",lastcost);
+			ServerFlag flag = new ServerFlag();
+			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+			this.print(json);
+			/*LoginResult loginresult = new LoginResult();
+			String succeed = "succeed";
+			loginresult.setPassword(succeed);
+			loginresult.setToken(newtoken);
+			Map<String, Object> data1 = new HashMap<String, Object>();
+			String json = "";
+			((Map) data1).put("data1",loginresult);
+			ServerFlag flag = new ServerFlag();
+			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+			this.print(json);*/
+		}
+		
+		if (path.equals("\\v1\\getLastCost")){
+			
+			DatabaseParam param = GoodsConfig.instance().getDatabaseParam();
+			NotificationTable table = new NotificationTable(param);
+			NotificationItem item = new NotificationItem();
+			Gson gson = new Gson();
+			item = gson.fromJson(data, NotificationItem.class);
+			Map<String, Object> mapper = null;
+			
+			try {
+				mapper = TransferUtils.transferBean2Map(item);
+			} catch (TransferException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String token = "";
+			token = mapper.get("token").toString();
+			List<NotificationItem> notifList = null;
+			notifList = table.queryList(0,-1,token);
+			NotificationItem lastcost = new NotificationItem();
+			lastcost = notifList.get(0);
+			if (notifList.size() == 0){
+				lastcost.setId(-1);
+			}
+			Map<String, Object> data1 = new HashMap<String, Object>();
+			String json = "";
+			((Map) data1).put("data1",lastcost);
+			ServerFlag flag = new ServerFlag();
+			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+			this.print(json);
+			/*LoginResult loginresult = new LoginResult();
+			String succeed = "succeed";
+			loginresult.setPassword(succeed);
+			loginresult.setToken(newtoken);
+			Map<String, Object> data1 = new HashMap<String, Object>();
+			String json = "";
+			((Map) data1).put("data1",loginresult);
+			ServerFlag flag = new ServerFlag();
+			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
+			this.print(json);*/
+		}	
 		if (path.equals("\\v1\\add"))
 		{	
 			DatabaseParam param = GoodsConfig.instance().getDatabaseParam();
@@ -246,12 +354,12 @@ public class GoodsProcess extends NetProcess {
 				mapper.remove("id");
 			}
 			table.insert(mapper);		
-			LoginResult loginresult = new LoginResult();
+			NotificationItem lastcost = new NotificationItem();
 			String succeed = "succeed";
-			loginresult.setPassword(succeed);
+			lastcost.setDate(succeed);
 			Map<String, Object> data1 = new HashMap<String, Object>();
 			String json = "";
-			((Map) data1).put("data1",loginresult);
+			((Map) data1).put("data1",lastcost);
 			ServerFlag flag = new ServerFlag();
 			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
 			this.print(json);

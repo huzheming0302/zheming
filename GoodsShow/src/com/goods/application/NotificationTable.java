@@ -122,6 +122,29 @@ public class NotificationTable extends NetTable {
 		
 		return notifList;
 	}
+	
+	public List<NotificationItem> queryList(long limit, long offset,String token )
+	{
+		List<NotificationItem> notifList = new ArrayList<NotificationItem>();
+
+		String sql = String.format("SELECT * FROM %s WHERE token = %s order by  id desc",this.getTableName(),token);
+		List<Map<String, Object>> list = this.query(sql);
+		if (list != null)
+		{
+			for(Map<String, Object> map : list)
+			{
+				NotificationItem item = new NotificationItem();
+				try {
+					item = TransferUtils.transferMap2Bean(map, NotificationItem.class);
+					notifList.add(item);
+				} catch (TransferException e) {
+					NetLog.error("Transfer", e.getMessage());
+				}
+			}
+		}
+		
+		return notifList;
+	}
 	// return id
 	public int insert(NotificationItem item)
 	{
