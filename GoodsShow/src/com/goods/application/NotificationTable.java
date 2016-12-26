@@ -31,7 +31,7 @@ public class NotificationTable extends NetTable {
 		mySql += "id int not null primary key auto_increment,";
 		mySql += "token VARCHAR(64) NOT NULL DEFAULT '',";
 		//mySql += "phonenumber VARCHAR(11) not null,";
-		mySql += "date VARCHAR(100) not null,";
+		mySql += "date VARCHAR(800) not null,";
 		mySql += "olddate VARCHAR(100) not null,";
 		mySql += "event VARCHAR(100) not null DEFAULT '',";
 		mySql += "money VARCHAR(100) not null,";

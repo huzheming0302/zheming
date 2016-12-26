@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_listview_item" >
+    
+	<RelativeLayout
+	    android:id="@+id/RelativeLayout_listview01"
+	    android:layout_width="match_parent"
+	    android:layout_height="60sp"
+	    android:gravity="center_vertical"
+	    android:background="@drawable/background_listview_item">
+	        
+            <Button
+                android:id="@+id/query_date"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:background="@drawable/boder_nopadding"
+                android:gravity="center"
+                android:paddingLeft="15px"
+                android:paddingRight="15px"
+                android:singleLine="true"
+                android:text="2016"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/query_sure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/boder_nopadding"
+                android:layout_marginRight="15dp"
+                android:gravity="center"
+                android:paddingLeft="15px"
+                android:paddingRight="15px"
+                android:singleLine="true"
+                android:text="@string/make_sure"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/query_mydate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/query_date"
+                android:layout_alignBottom="@+id/query_date"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="15dp"
+                android:text="@string/query_date"
+                android:textSize="20dp" />
+
+        </RelativeLayout>
+        
+	<ListView
+        android:id="@+id/query_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fastScrollEnabled="true"
+        android:layout_below="@id/RelativeLayout_listview01"
+        />
+    
+</RelativeLayout>

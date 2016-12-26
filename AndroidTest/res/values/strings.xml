@@ -49,9 +49,9 @@
 	<string name="make_sure">确定</string>
 	<string name="sure_delete">确定要删除这条记录么？</string>
 	<string name="logout">退出</string>
-	<string name="sure_logout">退出账号并结束程序</string>
+	<string name="sure_logout">确定要退出账号并\n结束程序</string>
 	<string name="switch_account">切换账号</string>
-	<string name="change_acount">确定要切换账号吗?</string>
+	<string name="change_acount">确定要切换账\n号吗?</string>
 	<string name="phone_number">账号</string>
 	<string name="password">密码</string>
 	<string name="forgot_password">忘记密码？</string>
@@ -65,4 +65,12 @@
 	<string name="write_password_again">请再次输入密码</string>
 	<string name="last">亲，没有您的任何账单记录</string>
 	<string name="wenhou">这是您最近一次的消费记录</string>
+	<string name="select_date">选择日期</string>
+	<string name="amendment_list">修改账单</string>
+	<string name="delete_list">确定要删除这条\n记录么？</string>
+	<string name="consume">花钱</string>
+	<string name="set_money">0.00</string>
+	<string name="set_remark">写点啥备注下</string>
+	<string name="query_date">查询日期</string>
+	<string name="yuan">元</string>
 </resources>

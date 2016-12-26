@@ -13,6 +13,7 @@ import com.goods.application.LoginResult;
 import com.goods.application.LoginTable;
 import com.goods.application.NotificationItem;
 import com.goods.application.NotificationTable;
+import com.goods.application.UpdateListView;
 import com.google.gson.Gson;
 
 import exhi.net.database.DatabaseParam;
@@ -64,19 +65,7 @@ public class GoodsProcess extends NetProcess {
 			}else {
 				result = "NOT EXISTS";
 				loginresult.setPassword(result);
-				/*item = table.insertNewPhonenumber(phonenumber, password);
-				try {
-					mapper = TransferUtils.transferBean2Map(item);
-				} catch (TransferException e) {
-					e.printStackTrace();
-				}
-				if (mapper != null && mapper.containsKey("id")){
-					mapper.remove("id");
-				}
-				int ret = table.insert(mapper);		// 插入
-				NetLog.debug("123", ret+"");
-				String succeed = "succeed";
-				loginresult.setPassword(succeed);*/
+				
 			}
 			Map<String, Object> data1 = new HashMap<String, Object>();
 			((Map) data1).put("data1",loginresult);
@@ -116,19 +105,7 @@ public class GoodsProcess extends NetProcess {
 					table2.getTableName(), newtoken, oldtoken);
 			table.update(sql);
 			table2.update(sql2);
-			/*List<NotificationItem> notifList = null;
-			notifList = table2.queryList(0,-1,newtoken);
-			NotificationItem lastcost = new NotificationItem();
-			lastcost = notifList.get(0);
-			if (notifList.size() == 0){
-				lastcost.setId(-1);
-			}
-			Map<String, Object> data1 = new HashMap<String, Object>();
-			String json = "";
-			((Map) data1).put("data1",lastcost);
-			ServerFlag flag = new ServerFlag();
-			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
-			this.print(json);*/
+			
 			LoginResult loginresult = new LoginResult();
 			String succeed = "succeed";
 			loginresult.setPassword(succeed);
@@ -281,16 +258,7 @@ public class GoodsProcess extends NetProcess {
 			ServerFlag flag = new ServerFlag();
 			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
 			this.print(json);
-			/*LoginResult loginresult = new LoginResult();
-			String succeed = "succeed";
-			loginresult.setPassword(succeed);
-			loginresult.setToken(newtoken);
-			Map<String, Object> data1 = new HashMap<String, Object>();
-			String json = "";
-			((Map) data1).put("data1",loginresult);
-			ServerFlag flag = new ServerFlag();
-			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
-			this.print(json);*/
+			
 		}
 		
 		if (path.equals("\\v1\\getLastCost")){
@@ -313,9 +281,10 @@ public class GoodsProcess extends NetProcess {
 			List<NotificationItem> notifList = null;
 			notifList = table.queryList(0,-1,token);
 			NotificationItem lastcost = new NotificationItem();
-			lastcost = notifList.get(0);
 			if (notifList.size() == 0){
 				lastcost.setId(-1);
+			}else {
+				lastcost = notifList.get(0);
 			}
 			Map<String, Object> data1 = new HashMap<String, Object>();
 			String json = "";
@@ -323,16 +292,7 @@ public class GoodsProcess extends NetProcess {
 			ServerFlag flag = new ServerFlag();
 			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
 			this.print(json);
-			/*LoginResult loginresult = new LoginResult();
-			String succeed = "succeed";
-			loginresult.setPassword(succeed);
-			loginresult.setToken(newtoken);
-			Map<String, Object> data1 = new HashMap<String, Object>();
-			String json = "";
-			((Map) data1).put("data1",loginresult);
-			ServerFlag flag = new ServerFlag();
-			json = new MakeJsonReturn().MakeJsonReturn(flag,data1);
-			this.print(json);*/
+			
 		}	
 		if (path.equals("\\v1\\add"))
 		{	
@@ -420,9 +380,15 @@ public class GoodsProcess extends NetProcess {
 					table.getTableName(), date, olddate,money,event, remark,token,id);	
 			table.update(sql);
 			
-			LoginResult result = new LoginResult();
+			UpdateListView result = new UpdateListView();
 			String password = "update_success";
+			result.setId(id);
 			result.setPassword(password);
+			result.setDate(date);
+			result.setMoney(money);
+			result.setEvent(event);
+			result.setRemark(remark);
+			result.setOlddate(olddate);
 			List<Object> list = new ArrayList<Object>();
 			list.add(result);
 			NetLog.debug(address, "4");
@@ -462,7 +428,7 @@ public class GoodsProcess extends NetProcess {
 			table.update(sql);
 			NetLog.debug(address, "3");
 			
-			LoginResult result = new LoginResult();
+			UpdateListView result = new UpdateListView();
 			String password = "delete_success";
 			result.setPassword(password);
 			List<Object> list = new ArrayList<Object>();

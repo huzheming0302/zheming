@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_scrollview"
+    android:fillViewport="true"
+    android:overScrollMode="ifContentScrolls" >
+    
+<RelativeLayout
+    android:layout_width="300dp"
+    android:layout_height="280dp" >
+    
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/mydate"
+        android:layout_alignBottom="@+id/mydate"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="15dp"
+        android:text="@string/date"
+        android:textSize="15dp" />
+    
+    <Button
+        android:id="@+id/mydate"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/boder_nopadding"
+        android:layout_toRightOf="@id/date"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:textSize="15dp"
+        android:gravity="center"
+        android:textColor="@color/blue"/>
+    
+    <EditText
+        android:id="@+id/mymoney"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/boder_nopadding"
+        android:layout_below="@id/mydate"
+        android:layout_alignLeft="@id/mydate"
+        android:layout_marginTop="15dp"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:textColor="@color/blue"/>
+
+    <TextView
+        android:id="@+id/money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/mymoney"
+        android:layout_alignBottom="@+id/mymoney"
+        android:layout_alignLeft="@+id/date"
+        android:text="@string/money"
+        android:textSize="15sp" />
+    
+    <Spinner
+        android:id="@+id/myevent"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/boder_nopadding"
+        android:layout_below="@id/mymoney"
+        android:layout_alignLeft="@id/mydate"
+        android:layout_marginTop="15dp"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/blue"/>
+
+    <TextView
+        android:id="@+id/event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/myevent"
+        android:layout_alignBottom="@+id/myevent"
+        android:layout_alignLeft="@+id/date"
+        android:text="@string/event"
+        android:textSize="15sp" />
+    
+    <TextView
+        android:id="@+id/remark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/event"
+        android:layout_alignLeft="@id/date"
+        android:layout_marginTop="15dp"
+        android:text="@string/remark"
+        android:textSize="15sp" />
+    
+    <EditText
+        android:id="@+id/myremark"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/boder_nopadding"
+        android:layout_below="@id/remark"
+        android:layout_alignLeft="@id/mydate"
+        android:layout_marginTop="1dp"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:lines="4" 
+        android:textColor="@color/blue"/>
+    
+
+</RelativeLayout>
+</ScrollView>
